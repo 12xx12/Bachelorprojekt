@@ -7,8 +7,18 @@
 
 #endif //CONSTANTS_H_
 namespace constants {
-const double distance = 2.5;
-const double place_dist = 1.5;
+constexpr double distance = 2.5;
+constexpr double place_dist = 1.5;
+constexpr double gravity = 10.0;
+constexpr double volume = place_dist * place_dist;
+constexpr double stiffness = 1000000;
+constexpr double friction = 0.0000001;
 
-const int window_size = 1000;
+constexpr int window_size = 1000;
+constexpr float particleRenderSize = 1.5;
+constexpr float renderScale = 40.0;
+
+constexpr float time_step = 0.001;
+
+constexpr double pi = 3.14159265358979323846;
 }

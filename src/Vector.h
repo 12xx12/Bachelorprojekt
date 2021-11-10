@@ -21,9 +21,22 @@ class Vector {
   bool operator!=(const Vector &other) const;
   friend std::ostream &operator<<(std::ostream &os, const Vector &vec);
 
+  Vector operator+(const Vector & other) const;
+  Vector operator-(const Vector & other) const;
+
+  Vector operator+= (const Vector & other);
+  Vector operator-= (const Vector & other);
+
  private:
   double _x;
   double _y;
 };
+
+extern inline Vector operator*(double scalar, const Vector & other);
+extern inline Vector operator*(const Vector & other, double scalar);
+
+// division
+extern inline Vector operator/(const Vector & other, double scalar);
+extern inline Vector operator/(double scalar, const Vector & other);
 
 #endif //VECTOR_H_

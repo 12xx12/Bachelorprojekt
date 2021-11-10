@@ -38,3 +38,39 @@ std::ostream &operator<<(std::ostream &os, const Vector &vec) {
   os << "(" << vec._x << ", " << vec._y << ")";
   return os;
 }
+
+Vector Vector::operator+(const Vector & other) const {
+  return Vector(_x + other._x, _y + other._y);
+}
+
+Vector Vector::operator-(const Vector & other) const {
+  return Vector(_x - other._x, _y - other._y);
+}
+
+Vector Vector::operator+=(const Vector &other) {
+  _x += other._x;
+  _y += other._y;
+  return *this;
+}
+
+Vector Vector::operator-=(const Vector &other) {
+  _x -= other._x;
+  _y -= other._y;
+  return *this;
+}
+
+inline Vector operator*(double scalar, const Vector & other) {
+  return Vector(scalar * other.getX(), scalar * other.getY());
+}
+
+inline Vector operator*(const Vector & other, double scalar) {
+  return Vector(scalar * other.getX(), scalar * other.getY());
+}
+
+inline Vector operator/(const Vector & other, double scalar) {
+  return Vector(other.getX() / scalar, other.getY() / scalar);
+}
+
+inline Vector operator/(double scalar, const Vector & other) {
+  return Vector(other.getX() / scalar, other.getY() / scalar);
+}

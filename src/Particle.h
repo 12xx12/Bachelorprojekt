@@ -7,6 +7,7 @@
 
 #include <ostream>
 #include <vector>
+#include <SFML/Graphics.hpp>
 
 #include "Vector.h"
 
@@ -22,28 +23,39 @@ class Particle {
 
   const Vector &getPos() const;
   const Vector &getVelocity() const;
-  int getDensity() const;
-  int getPressure() const;
+  double getDensity() const;
+  double getMass() const;
+  double getPressure() const;
   ParticleType getType() const;
 
-  friend std::ostream &operator<<(std::ostream &os,
-                                  const Particle &particle);
-  std::vector<const Particle *> getNeighbours(const std::vector<Particle>
-                                              &allParticles) const;
+  void updateNeighbors(const std::vector<Particle> &particles);
+  void updateDensity();
+  void updatePressure();
+  void updateVelocity(double time);
+  void updatePosition(double time);
 
-#ifdef BACHELOR_TEST
-  bool operator==(const Particle &other) const {
-    return this->_pos == other._pos && this->_density ==
-        other._density && this->_type == other._type;
-  }
-#endif
+  std::vector<const Particle *> getNeighbours(const std::vector<Particle> &allParticles) const;
+  double getKernelValue(const Particle &other) const;
+  Vector getKernelDerivative(const Particle &other) const;
+
+  void draw(sf::RenderWindow &window) const;
+
+  friend std::ostream &operator<<(std::ostream &os, const Particle &particle);
 
  private:
+  Vector _getPressureAcceleration() const;
+  std::vector<const Particle *> _getBoundaryNeighbours(const std::vector<Particle> &allParticles) const;
+
   Vector _pos;
   Vector _vel;
-  int _density;
-  int _pressure;
+  double _density;
+  double _restDensity;
+  double _pressure;
+  double _mass;
+  double _lastUpdate;
   ParticleType _type;
+  std::vector<const Particle *> _neighbours;
+  std::vector<const Particle *> _boundaryNeighbours;
 };
 
 #endif  // SRC_PARTICLE_H_

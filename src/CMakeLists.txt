@@ -7,7 +7,7 @@ target_sources(
 
   Particle.h
   Vector.h
-  constants.h
+        Constants.h
 )
 
 target_sources(
@@ -19,7 +19,7 @@ target_sources(
 
   Particle.h
   Vector.h
-  constants.h
+        Constants.h
 )
 
 set(FOLDERS

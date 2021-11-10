@@ -4,10 +4,13 @@ target_sources(
 
   Particle.cpp
   Vector.cpp
+  Logger.cpp
 
   Particle.h
   Vector.h
-        Constants.h
+  Constants.h
+  Logger.h
+  Utilities.h
 )
 
 target_sources(
@@ -16,10 +19,13 @@ target_sources(
 
   Particle.cpp
   Vector.cpp
+  Logger.cpp
 
   Particle.h
   Vector.h
-        Constants.h
+  Constants.h
+  Logger.h
+  Utilities.h
 )
 
 set(FOLDERS

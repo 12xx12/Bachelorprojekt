@@ -1,5 +1,5 @@
 //
-// Created by marc_ on 10.11.2021.
+// Copyright (C) 2021 Marc Lorenz
 //
 
 #include "Vector.h"

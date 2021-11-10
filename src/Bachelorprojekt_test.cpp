@@ -2,6 +2,8 @@
 // Copyright (C) 2021 Marc Lorenz
 //
 
+#define TEST_BUILD
+
 #include <gtest/gtest.h>
 #include "Particle.h"
 #include "Constants.h"
@@ -138,7 +140,7 @@ auto withBoundaryParticles = std::vector<Particle>{
 };
 }
 
-// just test a empty neighbourhood and check if the particle is actually there
+// just test an empty neighbourhood and check if the particle is actually there
 TEST(NeighbourSearch, EmptyNeighbourhood) {
   auto neighbourhood = std::vector<Particle>{};
   auto testParticle = Particle(0, 0, 42, Particle::ParticleType::FLUID);
@@ -151,6 +153,11 @@ TEST(NeighbourSearch, BasicNeighbourhood) {
   auto testParticle = Particle(0, 0, 100, Particle::ParticleType::FLUID);
   auto result = testParticle.getNeighbours(testSets::basicSet);
   EXPECT_EQ(result.size(), 10);
+
+  for (const auto & particle : result) {
+    EXPECT_EQ(particle->getType(), Particle::ParticleType::FLUID);
+  }
+
   EXPECT_EQ(result[0]->getDensity(), 100);
   EXPECT_EQ(result[1]->getDensity(), 7);
   EXPECT_EQ(result[1]->getPos(), Vector(-1.5, -1.5));

@@ -6,10 +6,9 @@
 #define CONSTANTS_H_
 
 #endif //CONSTANTS_H_
-namespace constants
-{
-	const double distance = 2.5;
-	const double place_dist = 1.5;
+namespace constants {
+const double distance = 2.5;
+const double place_dist = 1.5;
 
-	const int window_size = 1000;
+const int window_size = 1000;
 }

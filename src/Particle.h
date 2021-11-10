@@ -12,39 +12,38 @@
 
 class Particle {
  public:
-    enum class ParticleType {
-        NONE,
-        BOUNDARY,
-        FLUID
-    };
+  enum class ParticleType {
+    NONE,
+    BOUNDARY,
+    FLUID
+  };
 
-    Particle(double x, double y, int density, ParticleType type);
+  Particle(double x, double y, int density, ParticleType type);
 
-    const Vector & getPos() const;
-    const Vector & getVelocity() const;
-    int getDensity() const;
-    int getPressure() const;
-    ParticleType getType() const;
+  const Vector &getPos() const;
+  const Vector &getVelocity() const;
+  int getDensity() const;
+  int getPressure() const;
+  ParticleType getType() const;
 
-    friend std::ostream & operator<<(std::ostream & os,
-        const Particle & particle);
-    std::vector<const Particle *> getNeighbours(const std::vector<Particle>
-        & allParticles) const;
+  friend std::ostream &operator<<(std::ostream &os,
+                                  const Particle &particle);
+  std::vector<const Particle *> getNeighbours(const std::vector<Particle>
+                                              &allParticles) const;
 
 #ifdef BACHELOR_TEST
-    bool operator==(const Particle & other) const {
-        return this->_pos == other._pos && this->_density ==
+  bool operator==(const Particle &other) const {
+    return this->_pos == other._pos && this->_density ==
         other._density && this->_type == other._type;
-    }
+  }
 #endif
 
  private:
-    Vector _pos;
-    Vector _vel;
-    int _density;
-    int _pressure;
-    ParticleType _type;
+  Vector _pos;
+  Vector _vel;
+  int _density;
+  int _pressure;
+  ParticleType _type;
 };
-
 
 #endif  // SRC_PARTICLE_H_

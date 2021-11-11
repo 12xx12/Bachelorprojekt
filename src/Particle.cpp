@@ -158,6 +158,7 @@ Vector Particle::_getPressureAcceleration() const {
         (neighbour->getPressure() / pow(neighbour->getDensity(), 2))) * getKernelDerivative(*neighbour);
   }
 
+  // TODO: is this the right calculation?
   for (const auto & neighbour: _boundaryNeighbours) {
     pressureAcceleration -= neighbour->getMass() *
         ((getPressure() / pow(getDensity(), 2)) +

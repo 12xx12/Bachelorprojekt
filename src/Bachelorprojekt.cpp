@@ -34,7 +34,7 @@ int main() {
 
   sf::RenderWindow window(sf::VideoMode(constants::window_size, constants::window_size), "");
 
-  // lgging stuff
+  // logging stuff
   log->Log("Startup finished, rendering %d particles", particles.size());
   long long frame_counter = 0;
 

@@ -154,7 +154,7 @@ std::ostream &operator<<(std::ostream &os, const Particle &particle) {
 }
 
 Vector Particle::_getPressureAcceleration() const {
-  constexpr double boundaryCorrection = 10.0;
+  constexpr double boundaryCorrection = 100.0;
   Vector pressureAcceleration(0, 0);
   for (const auto &neighbour: _neighbours) {
 

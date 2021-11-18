@@ -9,16 +9,16 @@
 namespace constants {
 constexpr double particleSize = 1.5;
 constexpr double kernelSupport = 2 * particleSize;
-constexpr double gravity = 10.0;
+constexpr double gravity = 1000000000.0;
 constexpr double volume = particleSize * particleSize;
-constexpr double stiffness = 300.0;
-constexpr double friction = 0.0001;
+constexpr double stiffness = 100000000000.0;
+constexpr double friction = 0.001;
 
 constexpr int window_size = 1000.0;
 constexpr float particleRenderSize = 1.5;
 constexpr float renderScale = 20.0;
 
-constexpr float time_step = 0.001;
+constexpr float time_step = 0.0000001;
 
 constexpr double pi = 3.14159265358979323846;
 }

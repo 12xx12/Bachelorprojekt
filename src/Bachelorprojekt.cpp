@@ -98,9 +98,9 @@ int main() {
       Particle(1 * constants::particleSize, 2 * constants::particleSize, 1, Particle::ParticleType::FLUID),
       Particle(1 * constants::particleSize, 1 * constants::particleSize, 1, Particle::ParticleType::FLUID),
 */
-      Particle(-1 * constants::particleSize, 2 * constants::particleSize, 1, Particle::ParticleType::FLUID),
+      // Particle(-1 * constants::particleSize, 2 * constants::particleSize, 1, Particle::ParticleType::FLUID),
       Particle(0, 2 * constants::particleSize, 1, Particle::ParticleType::FLUID),
-      Particle(1 * constants::particleSize, 2 * constants::particleSize, 1, Particle::ParticleType::FLUID),
+      // Particle(1 * constants::particleSize, 2 * constants::particleSize, 1, Particle::ParticleType::FLUID),
 
       /*
       Particle(-10 * constants::particleSize, 10 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
@@ -221,25 +221,25 @@ int main() {
         window.close();
     }
 
-    for (auto &particle: particles) {
-      particle.updateNeighbors(particles);
-    }
+    std::for_each(particles.begin(), particles.end(), [&](Particle& p) {
+      p.updateNeighbors(particles);
+    });
 
-    for (auto &particle: particles) {
-      particle.updateDensity();
-      particle.updatePressure();
+    std::for_each(particles.begin(), particles.end(), [&](Particle& p) {
+      p.updateDensity();
+      p.updatePressure();
 
       std::stringstream ss;
-      if (particle.getType() == Particle::ParticleType::FLUID) {
-        ss << "Updated " << particle;
+      if (p.getType() == Particle::ParticleType::FLUID) {
+        ss << "Updated " << p;
         log->Log(ss.str());
       }
-    }
+    });
 
-    for (auto &particle: particles) {
-      particle.updateVelocity(constants::time_step);
-      particle.updatePosition(constants::time_step);
-    }
+    std::for_each(particles.begin(), particles.end(), [&](Particle& p) {
+      p.updateVelocity(constants::time_step);
+      p.updatePosition(constants::time_step);
+    });
 
     window.clear();
     for (const auto &particle: particles) {
@@ -254,5 +254,6 @@ int main() {
     log->Log(std::string("Rendered frame ") + to_string(frame_counter) + " in " + to_string(duration.count() / 1000) + " seconds.");
 
   }
+  CLogger::exit();
   return 0;
 }

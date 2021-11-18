@@ -4,24 +4,44 @@
 
 // #define LOG_ENABLE
 
+#include <iostream>
+#include <fstream>
+#include <filesystem>
+#include <algorithm>
+
 #include "Logger.h"
 #include "Utilities.h"
-const string CLogger::m_sFileName = "Log.txt";
-CLogger *CLogger::m_pThis = NULL;
+const char* CLogger::m_sFileName = "Log.txt";
+CLogger *CLogger::m_pThis = nullptr;
 ofstream CLogger::m_Logfile;
-CLogger::CLogger() {
 
-}
+CLogger::CLogger() = default;
 CLogger *CLogger::GetLogger() {
-  if (m_pThis == NULL) {
+  if (m_pThis == nullptr) {
     m_pThis = new CLogger();
-    m_Logfile.open(m_sFileName.c_str(), ios::out | ios::app);
+    m_Logfile.open(m_sFileName, ios::out | ios::trunc);
   }
   return m_pThis;
 }
 
+void CLogger::exit() {
+  m_Logfile.flush();
+  m_Logfile.close();
+  delete [] m_pThis;
+  auto currentPath = filesystem::current_path();
+  try {
+    auto currentTime = Util::CurrentDateTime();
+    std::replace(currentTime.begin(), currentTime.end(), ':', '_');
+    auto newPath = (string ("Log_") + currentTime + ".txt");
+    filesystem::rename(currentPath / m_sFileName, currentPath / newPath);
+  }
+  catch (filesystem::filesystem_error &e) {
+    cout << e.what() << endl;
+  }
+}
+
 void CLogger::Log(const char *format, ...) {
-  char *sMessage = NULL;
+  char *sMessage = nullptr;
   int nLength = 0;
   va_list args;
       va_start(args, format);
@@ -33,11 +53,11 @@ void CLogger::Log(const char *format, ...) {
   m_Logfile << Util::CurrentDateTime() << ":\t";
   m_Logfile << sMessage << "\n";
 #ifdef LOG_ENABLE
-  std::cout << Util::CurrentDateTime() << ":\t";
-  std::cout << sMessage << "\n";
+  cout << Util::CurrentDateTime() << ":\t";
+  cout << sMessage << "\n";
 #endif
 
-  va_end(args);
+      va_end(args);
   delete[] sMessage;
 }
 
@@ -45,8 +65,8 @@ void CLogger::Log(const string &sMessage) {
   m_Logfile << Util::CurrentDateTime() << ":\t";
   m_Logfile << sMessage << "\n";
 #ifdef LOG_ENABLE
-  std::cout << Util::CurrentDateTime() << ":\t";
-  std::cout << sMessage << "\n";
+  cout << Util::CurrentDateTime() << ":\t";
+  cout << sMessage << "\n";
 #endif
 }
 
@@ -54,8 +74,8 @@ CLogger &CLogger::operator<<(const string &sMessage) {
   m_Logfile << "\n" << Util::CurrentDateTime() << ":\t";
   m_Logfile << sMessage << "\n";
 #ifdef LOG_ENABLE
-  std::cout << "\n" << Util::CurrentDateTime() << ":\t";
-  std::cout << sMessage << "\n";
+  cout << "\n" << Util::CurrentDateTime() << ":\t";
+  cout << sMessage << "\n";
 #endif
   return *this;
 }

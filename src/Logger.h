@@ -36,6 +36,10 @@ class CLogger {
   *   @return singleton object of Clogger class..
   */
   static CLogger *GetLogger();
+  /**
+   * stops the logging and renames the file.
+   */
+   static void exit();
  private:
   /**
   *    Default constructor for the Logger class.
@@ -52,7 +56,7 @@ class CLogger {
   /**
   *   Log file name.
   **/
-  static const std::string m_sFileName;
+  static const char* m_sFileName;
   /**
   *   Singleton logger class object pointer.
   **/

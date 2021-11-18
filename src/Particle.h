@@ -27,6 +27,7 @@ class Particle {
   double getMass() const;
   double getPressure() const;
   ParticleType getType() const;
+  int getId() const;
 
   void updateNeighbors(const std::vector<Particle> &particles);
   void updateDensity();
@@ -39,8 +40,6 @@ class Particle {
   Vector getKernelDerivative(const Particle &other) const;
 
   void draw(sf::RenderWindow &window) const;
-  std::string toString() const;
-
   friend std::ostream &operator<<(std::ostream &os, const Particle &particle);
 
  private:
@@ -56,6 +55,9 @@ class Particle {
   double _lastUpdate;
   ParticleType _type;
   std::vector<const Particle *> _neighbours;
+  int _id;
+
+  static int _idCounter;
 };
 
 #endif  // SRC_PARTICLE_H_

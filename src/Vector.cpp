@@ -2,6 +2,7 @@
 // Copyright (C) 2021 Marc Lorenz
 //
 
+#include <sstream>
 #include "Vector.h"
 
 Vector::Vector() {
@@ -24,6 +25,12 @@ double Vector::getY() const {
 
 double Vector::distance(const Vector &other) const {
   return sqrt(pow(_x - other._x, 2) + pow(_y - other._y, 2));
+}
+
+std::string Vector::toString() const {
+  std::stringstream ss;
+  ss << "(" << _x << ", " << _y << ")";
+  return ss.str();
 }
 
 bool Vector::operator==(const Vector &other) const {
@@ -59,12 +66,22 @@ Vector Vector::operator-=(const Vector &other) {
   return *this;
 }
 
+Vector Vector::operator*=(double factor) {
+  _x *= factor;
+  _y *= factor;
+  return *this;
+}
+
 inline Vector operator*(double scalar, const Vector & other) {
   return Vector(scalar * other.getX(), scalar * other.getY());
 }
 
 inline Vector operator*(const Vector & other, double scalar) {
   return Vector(scalar * other.getX(), scalar * other.getY());
+}
+
+inline double operator*(const Vector & a, const Vector & b) {
+  return a.getX() * b.getX() + a.getY() * b.getY();
 }
 
 inline Vector operator/(const Vector & other, double scalar) {

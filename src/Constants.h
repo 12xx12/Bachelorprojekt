@@ -7,18 +7,32 @@
 
 #endif //CONSTANTS_H_
 namespace constants {
-constexpr double distance = 2.5;
-constexpr double place_dist = 1.5;
+constexpr double particleSize = 1.5;
+constexpr double kernelSupport = 2 * particleSize;
 constexpr double gravity = 10.0;
-constexpr double volume = place_dist * place_dist;
-constexpr double stiffness = 1000000;
-constexpr double friction = 0.0000001;
+constexpr double volume = particleSize * particleSize;
+constexpr double stiffness = 300.0;
+constexpr double friction = 0.0001;
 
-constexpr int window_size = 1000;
+constexpr int window_size = 1000.0;
 constexpr float particleRenderSize = 1.5;
-constexpr float renderScale = 5.0;
+constexpr float renderScale = 20.0;
 
-constexpr float time_step = 0.01;
+constexpr float time_step = 0.001;
 
 constexpr double pi = 3.14159265358979323846;
 }
+
+#ifndef NDEBUG
+#   define ASSERT(condition, message) \
+    do { \
+        if (! (condition)) { \
+            std::cerr << "Assertion `" #condition "` failed in " << __FILE__ \
+                      << " line " << __LINE__ << ": " << (message) << std::endl; \
+            std::terminate(); \
+        } \
+    } while (false)
+#else
+#   define ASSERT(condition, message) do { } while (false)
+#endif
+

@@ -17,6 +17,8 @@ class Vector {
   double getY() const;
   double distance(const Vector &other) const;
 
+  std::string toString() const;
+
   bool operator==(const Vector &other) const;
   bool operator!=(const Vector &other) const;
   friend std::ostream &operator<<(std::ostream &os, const Vector &vec);
@@ -26,6 +28,7 @@ class Vector {
 
   Vector operator+= (const Vector & other);
   Vector operator-= (const Vector & other);
+  Vector operator*= (double factor);
 
  private:
   double _x;
@@ -34,6 +37,7 @@ class Vector {
 
 extern inline Vector operator*(double scalar, const Vector & other);
 extern inline Vector operator*(const Vector & other, double scalar);
+extern inline double operator*(const Vector & a, const Vector & b);
 
 // division
 extern inline Vector operator/(const Vector & other, double scalar);

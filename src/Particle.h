@@ -19,7 +19,7 @@ class Particle {
     FLUID
   };
 
-  Particle(double x, double y, int density, ParticleType type);
+  Particle(double x, double y, double density, ParticleType type);
 
   const Vector &getPos() const;
   const Vector &getVelocity() const;
@@ -39,23 +39,23 @@ class Particle {
   Vector getKernelDerivative(const Particle &other) const;
 
   void draw(sf::RenderWindow &window) const;
+  std::string toString() const;
 
   friend std::ostream &operator<<(std::ostream &os, const Particle &particle);
 
  private:
   Vector _getPressureAcceleration() const;
-  std::vector<const Particle *> _getBoundaryNeighbours(const std::vector<Particle> &allParticles) const;
+  Vector _getViscosityAcceleration() const;
 
   Vector _pos;
   Vector _vel;
   double _density;
-  double _restDensity;
+  double _baseDensity;
   double _pressure;
   double _mass;
   double _lastUpdate;
   ParticleType _type;
   std::vector<const Particle *> _neighbours;
-  std::vector<const Particle *> _boundaryNeighbours;
 };
 
 #endif  // SRC_PARTICLE_H_

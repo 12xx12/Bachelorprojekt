@@ -77,6 +77,13 @@ TEST(VectorTest, subtractinInPlace) {
   EXPECT_EQ(v1.getY(), -2);
 }
 
+TEST(VectorTest, multiplyInPlace) {
+  auto v1 = Vector(1, 2);
+  auto v2 = Vector(2, 3);
+  auto res = v1 * v2;
+  EXPECT_EQ(res, 8);
+}
+
 // testing neighbourhood search
 
 // creating basic test set
@@ -207,8 +214,8 @@ TEST(NeighbourSearch, NoBoundaryParticleSet) {
 TEST(KenelFunction, compactTest) {
   auto testParticle = Particle(0, 0, 42, Particle::ParticleType::FLUID);
   for (const auto &neighbour: testSets::basicSet) {
-    if (neighbour.getPos().distance(testParticle.getPos()) > constants::distance) {
-      EXPECT_NEAR(testParticle.getKernelValue(neighbour), 0, 0.01);
+    if (neighbour.getPos().distance(testParticle.getPos()) > constants::particleSize) {
+      EXPECT_NEAR(testParticle.getKernelValue(neighbour), 0, 0.02);
     } else {
       EXPECT_GT(testParticle.getKernelValue(neighbour), 0);
     }
@@ -222,7 +229,7 @@ TEST(KernelFunction, sum) {
     sum += testParticle.getKernelValue(neighbour);
   }
 
-  EXPECT_NEAR(sum, 1 / constants::distance, 0.1);  // TODO: distance or distance^2
+  EXPECT_NEAR(sum, 1 / (constants::particleSize * constants::particleSize), 0.1);
 }
 
 TEST(KernelFunction, reverse) {

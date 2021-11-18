@@ -4,6 +4,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <chrono>
+#include <sstream>
 #include "Particle.h"
 #include "Constants.h"
 #include "Logger.h"
@@ -11,23 +12,76 @@
 int main() {
 
   std::vector<Particle> particles{
-      Particle(-5 * constants::place_dist, 0, 10, Particle::ParticleType::BOUNDARY),
-      Particle(-5 * constants::place_dist, -1 * constants::place_dist, 10, Particle::ParticleType::BOUNDARY),
-      Particle(-5 * constants::place_dist, -2 * constants::place_dist, 10, Particle::ParticleType::BOUNDARY),
-      Particle(-4 * constants::place_dist, -2 * constants::place_dist, 10, Particle::ParticleType::BOUNDARY),
-      Particle(-3 * constants::place_dist, -2 * constants::place_dist, 10, Particle::ParticleType::BOUNDARY),
-      Particle(-2 * constants::place_dist, -2 * constants::place_dist, 10, Particle::ParticleType::BOUNDARY),
-      Particle(-1 * constants::place_dist, -2 * constants::place_dist, 10, Particle::ParticleType::BOUNDARY),
-      Particle(0, -2 * constants::place_dist, 10, Particle::ParticleType::BOUNDARY),
-      Particle(1 * constants::place_dist, -2 * constants::place_dist, 10, Particle::ParticleType::BOUNDARY),
-      Particle(2 * constants::place_dist, -2 * constants::place_dist, 10, Particle::ParticleType::BOUNDARY),
-      Particle(3 * constants::place_dist, -2 * constants::place_dist, 10, Particle::ParticleType::BOUNDARY),
-      Particle(4 * constants::place_dist, -2 * constants::place_dist, 10, Particle::ParticleType::BOUNDARY),
-      Particle(5 * constants::place_dist, -2 * constants::place_dist, 10, Particle::ParticleType::BOUNDARY),
-      Particle(5 * constants::place_dist, -1 * constants::place_dist, 10, Particle::ParticleType::BOUNDARY),
-      Particle(5 * constants::place_dist, 0, 10, Particle::ParticleType::BOUNDARY),
+      Particle(-5 * constants::particleSize, 5 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(-5 * constants::particleSize, 4 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(-5 * constants::particleSize, 3 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(-5 * constants::particleSize, 2 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(-5 * constants::particleSize, 1 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(-5 * constants::particleSize, 0, 10, Particle::ParticleType::BOUNDARY),
+      Particle(-5 * constants::particleSize, -1 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(-5 * constants::particleSize, -2 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(-4 * constants::particleSize, -2 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(-3 * constants::particleSize, -2 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(-2 * constants::particleSize, -2 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(-1 * constants::particleSize, -2 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(0, -2 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(1 * constants::particleSize, -2 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(2 * constants::particleSize, -2 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(3 * constants::particleSize, -2 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(4 * constants::particleSize, -2 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(5 * constants::particleSize, -2 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(5 * constants::particleSize, -1 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(5 * constants::particleSize, 0, 10, Particle::ParticleType::BOUNDARY),
+      Particle(5 * constants::particleSize, 1 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(5 * constants::particleSize, 2 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(5 * constants::particleSize, 3 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(5 * constants::particleSize, 4 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(5 * constants::particleSize, 5 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
 
-      Particle(0, 0, 1, Particle::ParticleType::FLUID),
+      Particle(-6 * constants::particleSize, 5 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(-6 * constants::particleSize, 4 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(-6 * constants::particleSize, 3 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(-6 * constants::particleSize, 2 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(-6 * constants::particleSize, 1 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(-6 * constants::particleSize, 0, 10, Particle::ParticleType::BOUNDARY),
+      Particle(-6 * constants::particleSize, -1 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(-6 * constants::particleSize, -2 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(-6 * constants::particleSize, -3 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(-5 * constants::particleSize, -3 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(-4 * constants::particleSize, -3 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(-3 * constants::particleSize, -3 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(-2 * constants::particleSize, -3 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(-1 * constants::particleSize, -3 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(0, -3 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(1 * constants::particleSize, -3 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(2 * constants::particleSize, -3 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(3 * constants::particleSize, -3 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(4 * constants::particleSize, -3 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(5 * constants::particleSize, -3 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(6 * constants::particleSize, -3 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(6 * constants::particleSize, -2 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(6 * constants::particleSize, -1 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(6 * constants::particleSize, 0, 10, Particle::ParticleType::BOUNDARY),
+      Particle(6 * constants::particleSize, 1 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(6 * constants::particleSize, 2 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(6 * constants::particleSize, 3 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(6 * constants::particleSize, 4 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+      Particle(6 * constants::particleSize, 5 * constants::particleSize, 10, Particle::ParticleType::BOUNDARY),
+
+      Particle(-1 * constants::particleSize, 3 * constants::particleSize, 1, Particle::ParticleType::FLUID),
+      Particle(-1 * constants::particleSize, 2 * constants::particleSize, 1, Particle::ParticleType::FLUID),
+      Particle(-1 * constants::particleSize, 1 * constants::particleSize, 1, Particle::ParticleType::FLUID),
+      Particle(0, 1 * constants::particleSize, 1, Particle::ParticleType::FLUID),
+      Particle(0, 2 * constants::particleSize, 1, Particle::ParticleType::FLUID),
+      Particle(0, 3 * constants::particleSize, 1, Particle::ParticleType::FLUID),
+      Particle(1 * constants::particleSize, 3 * constants::particleSize, 1, Particle::ParticleType::FLUID),
+      Particle(1 * constants::particleSize, 2 * constants::particleSize, 1, Particle::ParticleType::FLUID),
+      Particle(1 * constants::particleSize, 1 * constants::particleSize, 1, Particle::ParticleType::FLUID),
+/*
+      Particle(-1 * constants::particleSize, 2 * constants::particleSize, 1, Particle::ParticleType::FLUID),
+      Particle(0, 2 * constants::particleSize, 1, Particle::ParticleType::FLUID),
+      Particle(1 * constants::particleSize, 2 * constants::particleSize, 1, Particle::ParticleType::FLUID),
+*/
   };
 
   auto log = CLogger::GetLogger();
@@ -35,6 +89,13 @@ int main() {
   sf::RenderWindow window(sf::VideoMode(constants::window_size, constants::window_size), "");
 
   // logging stuff
+  log->Log("");
+  log->Log("");
+  log->Log("");
+  log->Log("Starting simulation");
+  log->Log("");
+  log->Log("");
+  log->Log("");
   log->Log("Startup finished, rendering %d particles", particles.size());
   long long frame_counter = 0;
 
@@ -47,22 +108,28 @@ int main() {
         window.close();
     }
 
-    for (auto &particle : particles) {
+    for (auto &particle: particles) {
       particle.updateNeighbors(particles);
     }
 
-    for (auto &particle : particles) {
+    for (auto &particle: particles) {
       particle.updateDensity();
       particle.updatePressure();
+
+      std::stringstream ss;
+      if (particle.getType() == Particle::ParticleType::FLUID) {
+            ss << "Updated " << particle;
+            log->Log(ss.str());
+      }
     }
 
-    for (auto &particle : particles) {
+    for (auto &particle: particles) {
       particle.updateVelocity(constants::time_step);
       particle.updatePosition(constants::time_step);
     }
 
     window.clear();
-    for (const auto & particle: particles) {
+    for (const auto &particle: particles) {
       particle.draw(window);
     }
     window.display();

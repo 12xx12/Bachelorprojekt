@@ -1,0 +1,6 @@
+partikel mit i kennzeichnen
+konsistenter kennzeichnen
+\cdot
+Vektoren fett
+Nochmal gucken wegen gleich position im kernel
+Viskosität auch mit boundary machen

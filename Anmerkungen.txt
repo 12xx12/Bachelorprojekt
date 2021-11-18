@@ -4,3 +4,5 @@ konsistenter kennzeichnen
 Vektoren fett
 Nochmal gucken wegen gleich position im kernel
 Viskosität auch mit boundary machen
+
+https://interactivecomputergraphics.github.io/SPH-Tutorial/pdf/SPH_Tutorial.pdf

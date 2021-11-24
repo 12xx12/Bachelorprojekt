@@ -25,6 +25,7 @@ Particle::Particle(double x, double y, double density,
   _baseDensity = _density;
   _vel = Vector(0, 0);
   _id = ++_idCounter;
+  _pressure = 0;
 }
 
 const Vector &Particle::getPos() const {
@@ -77,7 +78,8 @@ void Particle::updatePressure() {
   if (_type != Particle::ParticleType::FLUID) {
     return;
   }
-  _pressure = std::max(constants::stiffness * ((_density / _baseDensity) - 1), 0.0);
+  _pressure =
+      std::max(constants::stiffness * ((_density / _baseDensity) - 1), 0.0);
 }
 
 void Particle::updateVelocity(double time) {
@@ -122,8 +124,8 @@ double Particle::getKernelValue(const Particle &other) const {
 }
 
 Vector Particle::getKernelDerivative(const Particle &other) const {
-  if (_pos == other._pos) {
-    return {0, 0};
+  if (_pos == other._pos || _id == other.getId()) {
+    return {};
   }
 
   auto distance = _pos.distance(other._pos) / constants::particleSize;
@@ -149,9 +151,11 @@ void Particle::draw(sf::RenderWindow &window) const {
       break;
   }
 
-  circle.setPosition(
-      _pos.getX() * constants::renderScale + constants::window_size / 2,
-      constants::window_size / 2 - _pos.getY() * constants::renderScale);
+  circle.setPosition(static_cast<float>(
+                         _pos.getX() * constants::renderScale
+                             + constants::window_size / 2.0),
+                     static_cast<float>(constants::window_size / 2.0
+                         - _pos.getY() * constants::renderScale));
   window.draw(circle);
 }
 
@@ -166,8 +170,10 @@ std::ostream &operator<<(std::ostream &os, const Particle &particle) {
       break;
   }
 
-  os << "Particle " << particle.getId() << ": " <<  type << " at " << particle.getPos() << " with velocity "
-     << particle.getVelocity() << " and density " << particle.getDensity() << " and pressure " << particle.getPressure();
+  os << "Particle " << particle.getId() << ": " << type << " at "
+     << particle.getPos() << " with velocity "
+     << particle.getVelocity() << " and density " << particle.getDensity()
+     << " and pressure " << particle.getPressure();
   return os;
 }
 
@@ -178,21 +184,16 @@ Vector Particle::_getPressureAcceleration() const {
 
     switch (neighbour->getType()) {
       case Particle::ParticleType::FLUID: {
-        pressureAcceleration -= neighbour->getMass() * ((getPressure() /
-            pow(getDensity(),
-                2)) +
-            (neighbour->getPressure() /
-                pow(neighbour->getDensity(),
-                    2))) *
-            getKernelDerivative(*neighbour);
+        pressureAcceleration -=
+            neighbour->getMass() * ((getPressure() / pow(getDensity(), 2)) +
+                (neighbour->getPressure() / pow(neighbour->getDensity(), 2))) *
+                getKernelDerivative(*neighbour);
         break;
       }
       case Particle::ParticleType::BOUNDARY: {
         pressureAcceleration -= boundaryCorrection * _mass *
-            ((getPressure() /
-                pow(getDensity(), 2)) +
-                (getPressure() /
-                    pow(getDensity(), 2))) *
+            ((getPressure() / pow(getDensity(), 2)) +
+                (getPressure() / pow(getDensity(), 2))) *
             getKernelDerivative(*neighbour);
         break;
       }

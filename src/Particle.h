@@ -50,9 +50,9 @@ class Particle {
   Vector _vel;
   double _density;
   double _baseDensity;
-  double _pressure;
+  double _pressure{};
   double _mass;
-  double _lastUpdate;
+  double _lastUpdate{};
   ParticleType _type;
   std::vector<const Particle *> _neighbours;
   int _id;

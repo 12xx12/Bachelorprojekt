@@ -5,11 +5,13 @@ target_sources(
   Particle.cpp
   Vector.cpp
   Logger.cpp
+  Matrix.cpp
 
   Particle.h
   Vector.h
   Constants.h
   Logger.h
+  Matrix.h
   Utilities.h
 )
 
@@ -20,11 +22,13 @@ target_sources(
   Particle.cpp
   Vector.cpp
   Logger.cpp
+  Matrix.cpp
 
   Particle.h
   Vector.h
   Constants.h
   Logger.h
+  Matrix.h
   Utilities.h
 )
 

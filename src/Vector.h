@@ -7,6 +7,8 @@
 
 #include <ostream>
 
+#include "Matrix.h"
+
 class Vector {
  public:
   Vector();
@@ -29,6 +31,7 @@ class Vector {
   Vector operator+= (const Vector & other);
   Vector operator-= (const Vector & other);
   Vector operator*= (double factor);
+  Vector operator- () const;
 
  private:
   double _x;
@@ -38,6 +41,8 @@ class Vector {
 extern inline Vector operator*(double scalar, const Vector & other);
 extern inline Vector operator*(const Vector & other, double scalar);
 extern inline double operator*(const Vector & a, const Vector & b);
+
+extern inline Matrix operator%(const Vector & a, const Vector & b);
 
 // division
 extern inline Vector operator/(const Vector & other, double scalar);

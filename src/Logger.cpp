@@ -71,7 +71,7 @@ void CLogger::Log(const string &sMessage) {
 }
 
 CLogger &CLogger::operator<<(const string &sMessage) {
-  m_Logfile << "\n" << Util::CurrentDateTime() << ":\t";
+  m_Logfile << Util::CurrentDateTime() << ":\t";
   m_Logfile << sMessage << "\n";
 #ifdef LOG_ENABLE
   cout << "\n" << Util::CurrentDateTime() << ":\t";

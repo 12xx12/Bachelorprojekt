@@ -72,6 +72,10 @@ Vector Vector::operator*=(double factor) {
   return *this;
 }
 
+Vector Vector::operator-() const {
+  return Vector(-_x, -_y);
+}
+
 inline Vector operator*(double scalar, const Vector & other) {
   return Vector(scalar * other.getX(), scalar * other.getY());
 }
@@ -82,6 +86,12 @@ inline Vector operator*(const Vector & other, double scalar) {
 
 inline double operator*(const Vector & a, const Vector & b) {
   return a.getX() * b.getX() + a.getY() * b.getY();
+}
+
+// Vector multiplication
+inline Matrix operator%(const Vector & a, const Vector & b) {
+  return Matrix(a.getX() * b.getX(), a.getY() * b.getX(),
+                a.getX() * b.getY(), a.getY() * b.getY());
 }
 
 inline Vector operator/(const Vector & other, double scalar) {

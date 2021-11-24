@@ -59,6 +59,28 @@ TEST(VectorTest, distance) {
 
   auto v3 = Vector(-1, -1);
   EXPECT_DOUBLE_EQ(v3.distance(v2), sqrt(2));
+
+  auto v4 = Vector(1, 0);
+  EXPECT_DOUBLE_EQ(v4.distance(v2), 1);
+
+  auto v5 = Vector(0, 1);
+  EXPECT_DOUBLE_EQ(v5.distance(v2), 1);
+
+  auto v6 = Vector(-1, 0);
+  EXPECT_DOUBLE_EQ(v6.distance(v2), 1);
+
+  auto v7 = Vector(0, -1);
+  EXPECT_DOUBLE_EQ(v7.distance(v2), 1);
+
+  auto v8 = Vector(1, 1);
+  EXPECT_DOUBLE_EQ(v8.distance(v2), sqrt(2));
+
+  auto v9 = Vector(-1, -1);
+  EXPECT_DOUBLE_EQ(v9.distance(v2), sqrt(2));
+
+  auto v10 = Vector(2, -1);
+  EXPECT_DOUBLE_EQ(v10.distance(v2), sqrt(5));
+
 }
 
 TEST(VectorTest, addingInPlace) {
@@ -84,6 +106,13 @@ TEST(VectorTest, multiplyInPlace) {
   EXPECT_EQ(res, 8);
 }
 
+TEST(VectorTest, tensorProduct) {
+  auto v1 = Vector(1, 2);
+  auto v2 = Vector(3, 4);
+  auto res = v1 % v2;
+  EXPECT_EQ(res, Matrix(3, 6, 4, 8));
+}
+
 // testing neighbourhood search
 
 // creating basic test set
@@ -91,130 +120,102 @@ TEST(VectorTest, multiplyInPlace) {
 
 namespace testSets {
 auto basicSet = std::vector<Particle>{
-    Particle(-3, -3, 1, Particle::ParticleType::FLUID),
-    Particle(-1.5, -3, 2, Particle::ParticleType::FLUID),
-    Particle(0, -3, 3, Particle::ParticleType::FLUID),
-    Particle(1.5, -3, 4, Particle::ParticleType::FLUID),
-    Particle(3, -3, 5, Particle::ParticleType::FLUID),
-    Particle(-3, -1.5, 6, Particle::ParticleType::FLUID),
-    Particle(-1.5, -1.5, 7, Particle::ParticleType::FLUID),
-    Particle(0, -1.5, 8, Particle::ParticleType::FLUID),
-    Particle(1.5, -1.5, 9, Particle::ParticleType::FLUID),
-    Particle(3, -1.5, 10, Particle::ParticleType::FLUID),
+    Particle(-4.5, -4.5, 1, Particle::ParticleType::FLUID),
+    Particle(-4.5, -3, 2, Particle::ParticleType::FLUID),
+    Particle(-4.5, -1.5, 3, Particle::ParticleType::FLUID),
+    Particle(-4.5, 0, 4, Particle::ParticleType::FLUID),
+    Particle(-4.5, 1.5, 5, Particle::ParticleType::FLUID),
+    Particle(-4.5, 3, 6, Particle::ParticleType::FLUID),
+    Particle(-4.5, 4.5, 7, Particle::ParticleType::FLUID),
+    Particle(-3, -4.5, 8, Particle::ParticleType::FLUID),
+    Particle(-3, -3, 9, Particle::ParticleType::FLUID),
+    Particle(-3, -1.5, 10, Particle::ParticleType::FLUID),
     Particle(-3, 0, 11, Particle::ParticleType::FLUID),
-    Particle(-1.5, 0, 12, Particle::ParticleType::FLUID),
-    Particle(0, 0, 13, Particle::ParticleType::FLUID),
-    Particle(1.5, 0, 14, Particle::ParticleType::FLUID),
-    Particle(3, 0, 15, Particle::ParticleType::FLUID),
-    Particle(-3, 1.5, 16, Particle::ParticleType::FLUID),
-    Particle(-1.5, 1.5, 17, Particle::ParticleType::FLUID),
-    Particle(0, 1.5, 18, Particle::ParticleType::FLUID),
-    Particle(1.5, 1.5, 19, Particle::ParticleType::FLUID),
-    Particle(3, 1.5, 20, Particle::ParticleType::FLUID),
-    Particle(-3, 3, 21, Particle::ParticleType::FLUID),
-    Particle(-1.5, 3, 22, Particle::ParticleType::FLUID),
-    Particle(0, 3, 23, Particle::ParticleType::FLUID),
-    Particle(1.5, 3, 24, Particle::ParticleType::FLUID),
-    Particle(3, 3, 25, Particle::ParticleType::FLUID)
-};
-
-auto withBoundaryParticles = std::vector<Particle>{
-    Particle(-3, -3, 1, Particle::ParticleType::FLUID),
-    Particle(-1.5, -3, 2, Particle::ParticleType::BOUNDARY),
-    Particle(0, -3, 3, Particle::ParticleType::FLUID),
-    Particle(1.5, -3, 4, Particle::ParticleType::FLUID),
-    Particle(3, -3, 5, Particle::ParticleType::FLUID),
-    Particle(-3, -1.5, 6, Particle::ParticleType::FLUID),
-    Particle(-1.5, -1.5, 7, Particle::ParticleType::BOUNDARY),
-    Particle(0, -1.5, 8, Particle::ParticleType::FLUID),
-    Particle(1.5, -1.5, 9, Particle::ParticleType::FLUID),
-    Particle(3, -1.5, 10, Particle::ParticleType::FLUID),
-    Particle(-3, 0, 11, Particle::ParticleType::FLUID),
-    Particle(-1.5, 0, 12, Particle::ParticleType::BOUNDARY),
-    Particle(0, 0, 13, Particle::ParticleType::FLUID),
-    Particle(1.5, 0, 14, Particle::ParticleType::FLUID),
-    Particle(3, 0, 15, Particle::ParticleType::FLUID),
-    Particle(-3, 1.5, 16, Particle::ParticleType::FLUID),
-    Particle(-1.5, 1.5, 17, Particle::ParticleType::BOUNDARY),
-    Particle(0, 1.5, 18, Particle::ParticleType::FLUID),
-    Particle(1.5, 1.5, 19, Particle::ParticleType::FLUID),
-    Particle(3, 1.5, 20, Particle::ParticleType::FLUID),
-    Particle(-3, 3, 21, Particle::ParticleType::FLUID),
-    Particle(-1.5, 3, 22, Particle::ParticleType::FLUID),
-    Particle(0, 3, 23, Particle::ParticleType::FLUID),
-    Particle(1.5, 3, 24, Particle::ParticleType::FLUID),
-    Particle(3, 3, 25, Particle::ParticleType::FLUID)
+    Particle(-3, 1.5, 12, Particle::ParticleType::FLUID),
+    Particle(-3, 3, 13, Particle::ParticleType::FLUID),
+    Particle(-3, 4.5, 14, Particle::ParticleType::FLUID),
+    Particle(-1.5, -4.5, 15, Particle::ParticleType::FLUID),
+    Particle(-1.5, -3, 16, Particle::ParticleType::FLUID),
+    Particle(-1.5, -1.5, 17, Particle::ParticleType::FLUID),
+    Particle(-1.5, 0, 18, Particle::ParticleType::FLUID),
+    Particle(-1.5, 1.5, 19, Particle::ParticleType::FLUID),
+    Particle(-1.5, 3, 20, Particle::ParticleType::FLUID),
+    Particle(-1.5, 4.5, 21, Particle::ParticleType::FLUID),
+    Particle(0, -4.5, 22, Particle::ParticleType::FLUID),
+    Particle(0, -3, 23, Particle::ParticleType::FLUID),
+    Particle(0, -1.5, 24, Particle::ParticleType::FLUID),
+    Particle(0, 0, 25, Particle::ParticleType::FLUID),
+    Particle(0, 1.5, 26, Particle::ParticleType::FLUID),
+    Particle(0, 3, 27, Particle::ParticleType::FLUID),
+    Particle(0, 4.5, 28, Particle::ParticleType::FLUID),
+    Particle(1.5, -4.5, 29, Particle::ParticleType::FLUID),
+    Particle(1.5, -3, 30, Particle::ParticleType::FLUID),
+    Particle(1.5, -1.5, 31, Particle::ParticleType::FLUID),
+    Particle(1.5, 0, 32, Particle::ParticleType::FLUID),
+    Particle(1.5, 1.5, 33, Particle::ParticleType::FLUID),
+    Particle(1.5, 3, 34, Particle::ParticleType::FLUID),
+    Particle(1.5, 4.5, 35, Particle::ParticleType::FLUID),
+    Particle(3, -4.5, 36, Particle::ParticleType::FLUID),
+    Particle(3, -3, 37, Particle::ParticleType::FLUID),
+    Particle(3, -1.5, 38, Particle::ParticleType::FLUID),
+    Particle(3, 0, 39, Particle::ParticleType::FLUID),
+    Particle(3, 1.5, 40, Particle::ParticleType::FLUID),
+    Particle(3, 3, 41, Particle::ParticleType::FLUID),
+    Particle(3, 4.5, 42, Particle::ParticleType::FLUID),
+    Particle(4.5, -4.5, 43, Particle::ParticleType::FLUID),
+    Particle(4.5, -3, 44, Particle::ParticleType::FLUID),
+    Particle(4.5, -1.5, 45, Particle::ParticleType::FLUID),
+    Particle(4.5, 0, 45, Particle::ParticleType::FLUID),
+    Particle(4.5, 1.5, 47, Particle::ParticleType::FLUID),
+    Particle(4.5, 3, 48, Particle::ParticleType::FLUID),
+    Particle(4.5, 4.5, 49, Particle::ParticleType::FLUID),
 };
 }
 
 // just test an empty neighbourhood and check if the particle is actually there
 TEST(NeighbourSearch, EmptyNeighbourhood) {
   auto neighbourhood = std::vector<Particle>{};
-  auto testParticle = Particle(0, 0, 42, Particle::ParticleType::FLUID);
+  auto testParticle = testSets::basicSet[24];
   auto result = testParticle.getNeighbours(neighbourhood);
   EXPECT_EQ(result.size(), 1);
-  EXPECT_EQ(result[0]->getDensity(), 42);
+  EXPECT_EQ(result[0]->getDensity(), 25);
+  EXPECT_EQ(result[0]->getPos(), Vector(0, 0));
 }
 
 TEST(NeighbourSearch, BasicNeighbourhood) {
-  auto testParticle = Particle(0, 0, 100, Particle::ParticleType::FLUID);
+  auto testParticle = testSets::basicSet[24];
   auto result = testParticle.getNeighbours(testSets::basicSet);
   EXPECT_EQ(result.size(), 10);
 
-  for (const auto & particle : result) {
+  for (const auto &particle: result) {
     EXPECT_EQ(particle->getType(), Particle::ParticleType::FLUID);
   }
 
-  EXPECT_EQ(result[0]->getDensity(), 100);
-  EXPECT_EQ(result[1]->getDensity(), 7);
+  EXPECT_EQ(result[0]->getDensity(), 25);
+  EXPECT_EQ(result[1]->getDensity(), 17);
   EXPECT_EQ(result[1]->getPos(), Vector(-1.5, -1.5));
-  EXPECT_EQ(result[2]->getDensity(), 8);
-  EXPECT_EQ(result[2]->getPos(), Vector(0, -1.5));
-  EXPECT_EQ(result[3]->getDensity(), 9);
-  EXPECT_EQ(result[3]->getPos(), Vector(1.5, -1.5));
-  EXPECT_EQ(result[4]->getDensity(), 12);
-  EXPECT_EQ(result[4]->getPos(), Vector(-1.5, 0));
-  EXPECT_EQ(result[5]->getDensity(), 13);
+  EXPECT_EQ(result[2]->getDensity(), 18);
+  EXPECT_EQ(result[2]->getPos(), Vector(-1.5, 0));
+  EXPECT_EQ(result[3]->getDensity(), 19);
+  EXPECT_EQ(result[3]->getPos(), Vector(-1.5, 1.5));
+  EXPECT_EQ(result[4]->getDensity(), 24);
+  EXPECT_EQ(result[4]->getPos(), Vector(0, -1.5));
+  EXPECT_EQ(result[5]->getDensity(), 25);
   EXPECT_EQ(result[5]->getPos(), Vector(0, 0));
-  EXPECT_EQ(result[6]->getDensity(), 14);
-  EXPECT_EQ(result[6]->getPos(), Vector(1.5, 0));
-  EXPECT_EQ(result[7]->getDensity(), 17);
-  EXPECT_EQ(result[7]->getPos(), Vector(-1.5, 1.5));
-  EXPECT_EQ(result[8]->getDensity(), 18);
-  EXPECT_EQ(result[8]->getPos(), Vector(0, 1.5));
-  EXPECT_EQ(result[9]->getDensity(), 19);
+  EXPECT_EQ(result[6]->getDensity(), 26);
+  EXPECT_EQ(result[6]->getPos(), Vector(0, 1.5));
+  EXPECT_EQ(result[7]->getDensity(), 31);
+  EXPECT_EQ(result[7]->getPos(), Vector(1.5, -1.5));
+  EXPECT_EQ(result[8]->getDensity(), 32);
+  EXPECT_EQ(result[8]->getPos(), Vector(1.5, 0));
+  EXPECT_EQ(result[9]->getDensity(), 33);
   EXPECT_EQ(result[9]->getPos(), Vector(1.5, 1.5));
 }
 
-TEST(NeighbourSearch, NoBoundaryParticleEmpty) {
-  auto neighbourhood = std::vector<Particle>{};
-  auto testParticle = Particle(0, 0, 42, Particle::ParticleType::BOUNDARY);
-  auto result = testParticle.getNeighbours(neighbourhood);
-  EXPECT_EQ(result.size(), 0);
-}
-
-TEST(NeighbourSearch, NoBoundaryParticleSet) {
-  auto testParticle = Particle(0, 0, 42, Particle::ParticleType::BOUNDARY);
-  auto result = testParticle.getNeighbours(testSets::withBoundaryParticles);
-  EXPECT_EQ(result.size(), 6);
-  EXPECT_EQ(result[0]->getDensity(), 8);
-  EXPECT_EQ(result[0]->getPos(), Vector(0, -1.5));
-  EXPECT_EQ(result[1]->getDensity(), 9);
-  EXPECT_EQ(result[1]->getPos(), Vector(1.5, -1.5));
-  EXPECT_EQ(result[2]->getDensity(), 13);
-  EXPECT_EQ(result[2]->getPos(), Vector(0, 0));
-  EXPECT_EQ(result[3]->getDensity(), 14);
-  EXPECT_EQ(result[3]->getPos(), Vector(1.5, 0));
-  EXPECT_EQ(result[4]->getDensity(), 18);
-  EXPECT_EQ(result[4]->getPos(), Vector(0, 1.5));
-  EXPECT_EQ(result[5]->getDensity(), 19);
-  EXPECT_EQ(result[5]->getPos(), Vector(1.5, 1.5));
-}
-
 TEST(KenelFunction, compactTest) {
-  auto testParticle = Particle(0, 0, 42, Particle::ParticleType::FLUID);
+  auto testParticle = testSets::basicSet[24];
   for (const auto &neighbour: testSets::basicSet) {
-    if (neighbour.getPos().distance(testParticle.getPos()) > constants::particleSize) {
+    if (neighbour.getPos().distance(testParticle.getPos()) >= constants::kernelSupport) {
       EXPECT_NEAR(testParticle.getKernelValue(neighbour), 0, 0.02);
     } else {
       EXPECT_GT(testParticle.getKernelValue(neighbour), 0);
@@ -223,29 +224,60 @@ TEST(KenelFunction, compactTest) {
 }
 
 TEST(KernelFunction, sum) {
-  auto testParticle = Particle(0, 0, 42, Particle::ParticleType::FLUID);
+  auto testParticle = testSets::basicSet[24];
   double sum = 0;
   for (const auto &neighbour: testSets::basicSet) {
     sum += testParticle.getKernelValue(neighbour);
   }
 
-  EXPECT_NEAR(sum, 1 / (constants::particleSize * constants::particleSize), 0.1);
+  EXPECT_NEAR(sum, 1 / (constants::volume), 0.1);
 }
 
 TEST(KernelFunction, reverse) {
-  auto testParticle = Particle(0, 0, 42, Particle::ParticleType::FLUID);
+  auto testParticle = testSets::basicSet[24];
   for (const auto &neighbour: testSets::basicSet) {
     EXPECT_NEAR(testParticle.getKernelValue(neighbour), neighbour.getKernelValue(testParticle), 0.1);
   }
 }
 
+TEST(KernelDerivation, reverse) {
+  auto testParticle = testSets::basicSet[24];
+  for (const auto &neighbour: testSets::basicSet) {
+    auto w_i_j = testParticle.getKernelDerivative(neighbour);
+    auto w_j_i = neighbour.getKernelDerivative(testParticle);
+    EXPECT_NEAR(w_i_j.getX(), -w_j_i.getX(), 0.1);
+    EXPECT_NEAR(w_i_j.getY(), -w_j_i.getY(), 0.1);
+  }
+}
+
 TEST(KerndelDerivation, sum) {
-  auto testParticle = Particle(0, 0, 42, Particle::ParticleType::FLUID);
+  auto testParticle = testSets::basicSet[24];
   auto sum = Vector();
   for (const auto &neighbour: testSets::basicSet) {
     sum += testParticle.getKernelDerivative(neighbour);
   }
-
   EXPECT_NEAR(sum.getX(), 0, 0.001);
   EXPECT_NEAR(sum.getY(), 0, 0.001);
+}
+
+TEST(KernelDerivation, betweenSamePos) {
+  auto testParticle = testSets::basicSet[24];
+  EXPECT_NEAR(testParticle.getKernelDerivative(testParticle).getX(), 0, 0.001);
+  EXPECT_NEAR(testParticle.getKernelDerivative(testParticle).getY(), 0, 0.001);
+}
+
+TEST(KernelDerivation, multiplication) {
+  auto testParticle = testSets::basicSet[24];
+  auto res = Matrix();
+  for (const auto & neighbor : testSets::basicSet) {
+    auto pos = testParticle.getPos() - neighbor.getPos();
+    auto derivative = testParticle.getKernelDerivative(neighbor);
+    res += pos % derivative;
+  }
+  auto TestMatrix = - 1 / constants::volume * Matrix(1, 0, 0, 1);
+
+  EXPECT_NEAR(res.x_1, TestMatrix.x_1, 0.001);
+  EXPECT_NEAR(res.y_1, TestMatrix.y_1, 0.001);
+  EXPECT_NEAR(res.x_2, TestMatrix.x_2, 0.001);
+  EXPECT_NEAR(res.y_2, TestMatrix.y_2, 0.001);
 }

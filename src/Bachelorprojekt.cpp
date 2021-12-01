@@ -12,7 +12,7 @@
 int main() {
 
   std::vector<Particle> particles{
-
+/*
         Particle(-5 * constants::particleSize, 10 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
         Particle(-5 * constants::particleSize, 9 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
         Particle(-5 * constants::particleSize, 8 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
@@ -88,7 +88,7 @@ int main() {
         Particle(6 * constants::particleSize, 8 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
         Particle(6 * constants::particleSize, 9 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
         Particle(6 * constants::particleSize, 10 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
-/*
+
         Particle(-1 * constants::particleSize, 3 * constants::particleSize, 1, Particle::ParticleType::FLUID),
         Particle(-1 * constants::particleSize, 2 * constants::particleSize, 1, Particle::ParticleType::FLUID),
         Particle(-1 * constants::particleSize, 1 * constants::particleSize, 1, Particle::ParticleType::FLUID),
@@ -98,11 +98,11 @@ int main() {
         Particle(1 * constants::particleSize, 3 * constants::particleSize, 1, Particle::ParticleType::FLUID),
         Particle(1 * constants::particleSize, 2 * constants::particleSize, 1, Particle::ParticleType::FLUID),
         Particle(1 * constants::particleSize, 1 * constants::particleSize, 1, Particle::ParticleType::FLUID),
-*/
-        // Particle(-1 * constants::particleSize, 2 * constants::particleSize, 1, Particle::ParticleType::FLUID),
+
+        Particle(-1 * constants::particleSize, 2 * constants::particleSize, 1, Particle::ParticleType::FLUID),
         Particle(0, 2 * constants::particleSize, 1, Particle::ParticleType::FLUID),
-        // Particle(1 * constants::particleSize, 2 * constants::particleSize, 1, Particle::ParticleType::FLUID),
-/*
+        Particle(1 * constants::particleSize, 2 * constants::particleSize, 1, Particle::ParticleType::FLUID),
+*/
       Particle(-10 * constants::particleSize, 10 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
       Particle(-10 * constants::particleSize, 9 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
       Particle(-10 * constants::particleSize, 8 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
@@ -165,6 +165,72 @@ int main() {
       Particle(10 * constants::particleSize, 9 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
       Particle(10 * constants::particleSize, 10 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
 
+      Particle(-11 * constants::particleSize, 10 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(-11 * constants::particleSize, 9 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(-11 * constants::particleSize, 8 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(-11 * constants::particleSize, 7 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(-11 * constants::particleSize, 6 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(-11 * constants::particleSize, 5 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(-11 * constants::particleSize, 4 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(-11 * constants::particleSize, 3 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(-11 * constants::particleSize, 2 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(-11 * constants::particleSize, 1 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(-11 * constants::particleSize, 0, 5, Particle::ParticleType::BOUNDARY),
+      Particle(-11 * constants::particleSize, -1 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(-11 * constants::particleSize, -2 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(-11 * constants::particleSize, -3 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(-11 * constants::particleSize, -4 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(-11 * constants::particleSize, -5 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(-11 * constants::particleSize, -6 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(-11 * constants::particleSize, -7 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(-11 * constants::particleSize, -8 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(-11 * constants::particleSize, -9 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(-11 * constants::particleSize, -10 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(-11 * constants::particleSize, -11 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(-10 * constants::particleSize, -11 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(-9 * constants::particleSize, -11 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(-8 * constants::particleSize, -11 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(-7 * constants::particleSize, -11 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(-6 * constants::particleSize, -11 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(-5 * constants::particleSize, -11 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(-4 * constants::particleSize, -11 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(-3 * constants::particleSize, -11 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(-2 * constants::particleSize, -11 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(-1 * constants::particleSize, -11 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(0, -11 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(1 * constants::particleSize, -11 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(2 * constants::particleSize, -11 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(3 * constants::particleSize, -11 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(4 * constants::particleSize, -11 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(5 * constants::particleSize, -11 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(6 * constants::particleSize, -11 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(7 * constants::particleSize, -11 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(8 * constants::particleSize, -11 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(9 * constants::particleSize, -11 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(10 * constants::particleSize, -11 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(11 * constants::particleSize, -11 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(11 * constants::particleSize, -10 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(11 * constants::particleSize, -9 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(11 * constants::particleSize, -8 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(11 * constants::particleSize, -7 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(11 * constants::particleSize, -6 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(11 * constants::particleSize, -5 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(11 * constants::particleSize, -4 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(11 * constants::particleSize, -3 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(11 * constants::particleSize, -2 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(11 * constants::particleSize, -1 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(11 * constants::particleSize, 0, 5, Particle::ParticleType::BOUNDARY),
+      Particle(11 * constants::particleSize, 1 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(11 * constants::particleSize, 2 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(11 * constants::particleSize, 3 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(11 * constants::particleSize, 4 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(11 * constants::particleSize, 5 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(11 * constants::particleSize, 6 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(11 * constants::particleSize, 7 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(11 * constants::particleSize, 8 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(11 * constants::particleSize, 9 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+      Particle(11 * constants::particleSize, 10 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
+
       Particle(-3 * constants::particleSize, -3 * constants::particleSize, 1.1, Particle::ParticleType::FLUID),
       Particle(-2 * constants::particleSize, -3 * constants::particleSize, 1.1, Particle::ParticleType::FLUID),
       Particle(-1 * constants::particleSize, -3 * constants::particleSize, 1.1, Particle::ParticleType::FLUID),
@@ -220,7 +286,7 @@ int main() {
       Particle(1 * constants::particleSize, 3 * constants::particleSize, 1.1, Particle::ParticleType::FLUID),
       Particle(2 * constants::particleSize, 3 * constants::particleSize, 1.1, Particle::ParticleType::FLUID),
       Particle(3 * constants::particleSize, 3 * constants::particleSize, 1.1, Particle::ParticleType::FLUID),
-*/
+
   };
 
   auto log = CLogger::GetLogger();

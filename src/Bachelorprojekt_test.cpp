@@ -181,40 +181,36 @@ TEST(NeighbourSearch, EmptyNeighbourhood) {
   auto neighbourhood = std::vector<Particle>{};
   auto testParticle = testSets::basicSet[24];
   auto result = testParticle.getNeighbours(neighbourhood);
-  EXPECT_EQ(result.size(), 1);
-  EXPECT_EQ(result[0]->getDensity(), 25);
-  EXPECT_EQ(result[0]->getPos(), Vector(0, 0));
+  EXPECT_EQ(result.size(), 0);
 }
 
 TEST(NeighbourSearch, BasicNeighbourhood) {
   auto testParticle = testSets::basicSet[24];
   auto result = testParticle.getNeighbours(testSets::basicSet);
-  EXPECT_EQ(result.size(), 10);
+  EXPECT_EQ(result.size(), 9);
 
   for (const auto &particle: result) {
     EXPECT_EQ(particle->getType(), Particle::ParticleType::FLUID);
   }
 
-  EXPECT_EQ(result[0]->getDensity(), 25);
-  EXPECT_EQ(result[0]->getPos(), Vector(0, 0));
-  EXPECT_EQ(result[1]->getDensity(), 17);
-  EXPECT_EQ(result[1]->getPos(), Vector(-1.5, -1.5));
-  EXPECT_EQ(result[2]->getDensity(), 18);
-  EXPECT_EQ(result[2]->getPos(), Vector(-1.5, 0));
-  EXPECT_EQ(result[3]->getDensity(), 19);
-  EXPECT_EQ(result[3]->getPos(), Vector(-1.5, 1.5));
-  EXPECT_EQ(result[4]->getDensity(), 24);
-  EXPECT_EQ(result[4]->getPos(), Vector(0, -1.5));
-  EXPECT_EQ(result[5]->getDensity(), 25);
-  EXPECT_EQ(result[5]->getPos(), Vector(0, 0));
-  EXPECT_EQ(result[6]->getDensity(), 26);
-  EXPECT_EQ(result[6]->getPos(), Vector(0, 1.5));
-  EXPECT_EQ(result[7]->getDensity(), 31);
-  EXPECT_EQ(result[7]->getPos(), Vector(1.5, -1.5));
-  EXPECT_EQ(result[8]->getDensity(), 32);
-  EXPECT_EQ(result[8]->getPos(), Vector(1.5, 0));
-  EXPECT_EQ(result[9]->getDensity(), 33);
-  EXPECT_EQ(result[9]->getPos(), Vector(1.5, 1.5));
+  EXPECT_EQ(result[0]->getDensity(), 17);
+  EXPECT_EQ(result[0]->getPos(), Vector(-1.5, -1.5));
+  EXPECT_EQ(result[1]->getDensity(), 18);
+  EXPECT_EQ(result[1]->getPos(), Vector(-1.5, 0));
+  EXPECT_EQ(result[2]->getDensity(), 19);
+  EXPECT_EQ(result[2]->getPos(), Vector(-1.5, 1.5));
+  EXPECT_EQ(result[3]->getDensity(), 24);
+  EXPECT_EQ(result[3]->getPos(), Vector(0, -1.5));
+  EXPECT_EQ(result[4]->getDensity(), 25);
+  EXPECT_EQ(result[4]->getPos(), Vector(0, 0));
+  EXPECT_EQ(result[5]->getDensity(), 26);
+  EXPECT_EQ(result[5]->getPos(), Vector(0, 1.5));
+  EXPECT_EQ(result[6]->getDensity(), 31);
+  EXPECT_EQ(result[6]->getPos(), Vector(1.5, -1.5));
+  EXPECT_EQ(result[7]->getDensity(), 32);
+  EXPECT_EQ(result[7]->getPos(), Vector(1.5, 0));
+  EXPECT_EQ(result[8]->getDensity(), 33);
+  EXPECT_EQ(result[8]->getPos(), Vector(1.5, 1.5));
 }
 
 TEST(KenelFunction, compactTest) {

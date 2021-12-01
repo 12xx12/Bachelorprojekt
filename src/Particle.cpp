@@ -102,7 +102,6 @@ void Particle::updatePosition(double time) {
 
 std::vector<const Particle *> Particle::getNeighbours(const std::vector<Particle> &allParticles) const {
   auto neighbours = std::vector<const Particle *>();
-  neighbours.push_back(this);
 
   for (const auto &particle: allParticles) {
     if (particle._pos.distance(_pos) < constants::kernelSupport)
@@ -152,19 +151,6 @@ void Particle::draw(sf::RenderWindow &window) const {
                              + constants::window_size / 2.0),
                      static_cast<float>(constants::window_size / 2.0
                          - _pos.getY() * constants::renderScale));
-
-  sf::CircleShape neigbourCircle(
-      constants::particleRenderSize * constants::renderScale * 1.5);
-  neigbourCircle.setFillColor(sf::Color(0, 0, 0, 0));
-  neigbourCircle.setOutlineColor(sf::Color::Green);
-  neigbourCircle.setOutlineThickness(1);
-  neigbourCircle.setPosition(
-      static_cast<float>((_pos.getX() - (constants::particleSize)) * constants::renderScale + constants::window_size / 2.0),
-      static_cast<float>(constants::window_size / 2.0 - (_pos.getY() + (constants::particleSize)) * constants::renderScale));
-
-  if (_type == ParticleType::FLUID) {
-    window.draw(neigbourCircle);
-  }
   window.draw(circle);
 }
 
@@ -187,7 +173,6 @@ std::ostream &operator<<(std::ostream &os, const Particle &particle) {
 }
 
 Vector Particle::_getPressureAcceleration() const {
-  Vector pressureAcceleration(0, 0);
   Vector solidAcceleration(0, 0);
   Vector fluidAcceleration(0, 0);
   for (const auto &neighbour: _neighbours) {
@@ -204,12 +189,11 @@ Vector Particle::_getPressureAcceleration() const {
     }
   }
 
-  pressureAcceleration = -_mass * (fluidAcceleration + solidAcceleration);
-  return pressureAcceleration;
+  return -_mass * (fluidAcceleration + solidAcceleration);
 }
 
 Vector Particle::_getViscosityAcceleration() const {
-  constexpr double boundaryCorrection = 100;
+  constexpr double boundaryCorrection = 40;
   Vector viscosityAcceleration(0, 0);
   for (const auto &neighbour: _neighbours) {
     auto t1 = (neighbour->getMass() / neighbour->getDensity());

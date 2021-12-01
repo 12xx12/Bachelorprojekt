@@ -12,7 +12,7 @@
 int main() {
 
   std::vector<Particle> particles{
-      /*
+
         Particle(-5 * constants::particleSize, 10 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
         Particle(-5 * constants::particleSize, 9 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
         Particle(-5 * constants::particleSize, 8 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
@@ -88,7 +88,7 @@ int main() {
         Particle(6 * constants::particleSize, 8 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
         Particle(6 * constants::particleSize, 9 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
         Particle(6 * constants::particleSize, 10 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
-
+/*
         Particle(-1 * constants::particleSize, 3 * constants::particleSize, 1, Particle::ParticleType::FLUID),
         Particle(-1 * constants::particleSize, 2 * constants::particleSize, 1, Particle::ParticleType::FLUID),
         Particle(-1 * constants::particleSize, 1 * constants::particleSize, 1, Particle::ParticleType::FLUID),
@@ -98,12 +98,11 @@ int main() {
         Particle(1 * constants::particleSize, 3 * constants::particleSize, 1, Particle::ParticleType::FLUID),
         Particle(1 * constants::particleSize, 2 * constants::particleSize, 1, Particle::ParticleType::FLUID),
         Particle(1 * constants::particleSize, 1 * constants::particleSize, 1, Particle::ParticleType::FLUID),
-
-        Particle(-1 * constants::particleSize, 2 * constants::particleSize, 1, Particle::ParticleType::FLUID),
+*/
+        // Particle(-1 * constants::particleSize, 2 * constants::particleSize, 1, Particle::ParticleType::FLUID),
         Particle(0, 2 * constants::particleSize, 1, Particle::ParticleType::FLUID),
-        Particle(1 * constants::particleSize, 2 * constants::particleSize, 1, Particle::ParticleType::FLUID),
-  */
-
+        // Particle(1 * constants::particleSize, 2 * constants::particleSize, 1, Particle::ParticleType::FLUID),
+/*
       Particle(-10 * constants::particleSize, 10 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
       Particle(-10 * constants::particleSize, 9 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
       Particle(-10 * constants::particleSize, 8 * constants::particleSize, 5, Particle::ParticleType::BOUNDARY),
@@ -221,7 +220,7 @@ int main() {
       Particle(1 * constants::particleSize, 3 * constants::particleSize, 1.1, Particle::ParticleType::FLUID),
       Particle(2 * constants::particleSize, 3 * constants::particleSize, 1.1, Particle::ParticleType::FLUID),
       Particle(3 * constants::particleSize, 3 * constants::particleSize, 1.1, Particle::ParticleType::FLUID),
-
+*/
   };
 
   auto log = CLogger::GetLogger();
@@ -242,6 +241,14 @@ int main() {
   while (window.isOpen()) {
     auto start = std::chrono::high_resolution_clock::now();
 
+    for (auto& p : particles) {
+      std::stringstream ss;
+      if (p.getType() == Particle::ParticleType::FLUID) {
+        ss << "Updated " << p;
+        log->Log(ss.str());
+      }
+    }
+
     sf::Event event{};
     while (window.pollEvent(event)) {
       if (event.type == sf::Event::Closed)
@@ -255,12 +262,6 @@ int main() {
     std::for_each(particles.begin(), particles.end(), [&](Particle& p) {
       p.updateDensity();
       p.updatePressure();
-
-      std::stringstream ss;
-      if (p.getType() == Particle::ParticleType::FLUID) {
-        ss << "Updated " << p;
-        log->Log(ss.str());
-      }
     });
 
     for (auto & particle : particles) {

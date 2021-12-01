@@ -185,31 +185,40 @@ TEST(NeighbourSearch, EmptyNeighbourhood) {
 TEST(NeighbourSearch, BasicNeighbourhood) {
   auto testParticle = testSets::basicSet[24];
   auto result = testParticle.getNeighbours(testSets::basicSet);
-  EXPECT_EQ(result.size(), 10);
+  EXPECT_EQ(result.size(), 14);
 
   for (const auto &particle: result) {
     EXPECT_EQ(particle->getType(), Particle::ParticleType::FLUID);
   }
 
   EXPECT_EQ(result[0]->getDensity(), 25);
-  EXPECT_EQ(result[1]->getDensity(), 17);
-  EXPECT_EQ(result[1]->getPos(), Vector(-1.5, -1.5));
-  EXPECT_EQ(result[2]->getDensity(), 18);
-  EXPECT_EQ(result[2]->getPos(), Vector(-1.5, 0));
-  EXPECT_EQ(result[3]->getDensity(), 19);
-  EXPECT_EQ(result[3]->getPos(), Vector(-1.5, 1.5));
-  EXPECT_EQ(result[4]->getDensity(), 24);
-  EXPECT_EQ(result[4]->getPos(), Vector(0, -1.5));
-  EXPECT_EQ(result[5]->getDensity(), 25);
-  EXPECT_EQ(result[5]->getPos(), Vector(0, 0));
-  EXPECT_EQ(result[6]->getDensity(), 26);
-  EXPECT_EQ(result[6]->getPos(), Vector(0, 1.5));
-  EXPECT_EQ(result[7]->getDensity(), 31);
-  EXPECT_EQ(result[7]->getPos(), Vector(1.5, -1.5));
-  EXPECT_EQ(result[8]->getDensity(), 32);
-  EXPECT_EQ(result[8]->getPos(), Vector(1.5, 0));
-  EXPECT_EQ(result[9]->getDensity(), 33);
-  EXPECT_EQ(result[9]->getPos(), Vector(1.5, 1.5));
+  EXPECT_EQ(result[0]->getPos(), Vector(0, 0));
+  EXPECT_EQ(result[1]->getDensity(), 11);
+  EXPECT_EQ(result[1]->getPos(), Vector(-3, 0));
+  EXPECT_EQ(result[2]->getDensity(), 17);
+  EXPECT_EQ(result[2]->getPos(), Vector(-1.5, -1.5));
+  EXPECT_EQ(result[3]->getDensity(), 18);
+  EXPECT_EQ(result[3]->getPos(), Vector(-1.5, 0));
+  EXPECT_EQ(result[4]->getDensity(), 19);
+  EXPECT_EQ(result[4]->getPos(), Vector(-1.5, 1.5));
+  EXPECT_EQ(result[5]->getDensity(), 23);
+  EXPECT_EQ(result[5]->getPos(), Vector(0, -3));
+  EXPECT_EQ(result[6]->getDensity(), 24);
+  EXPECT_EQ(result[6]->getPos(), Vector(0, -1.5));
+  EXPECT_EQ(result[7]->getDensity(), 25);
+  EXPECT_EQ(result[7]->getPos(), Vector(0, 0));
+  EXPECT_EQ(result[8]->getDensity(), 26);
+  EXPECT_EQ(result[8]->getPos(), Vector(0, 1.5));
+  EXPECT_EQ(result[9]->getDensity(), 27);
+  EXPECT_EQ(result[9]->getPos(), Vector(0, 3));
+  EXPECT_EQ(result[10]->getDensity(), 31);
+  EXPECT_EQ(result[10]->getPos(), Vector(1.5, -1.5));
+  EXPECT_EQ(result[11]->getDensity(), 32);
+  EXPECT_EQ(result[11]->getPos(), Vector(1.5, 0));
+  EXPECT_EQ(result[12]->getDensity(), 33);
+  EXPECT_EQ(result[12]->getPos(), Vector(1.5, 1.5));
+  EXPECT_EQ(result[13]->getDensity(), 39);
+  EXPECT_EQ(result[13]->getPos(), Vector(3, 0));
 }
 
 TEST(KenelFunction, compactTest) {
@@ -230,7 +239,7 @@ TEST(KernelFunction, sum) {
     sum += testParticle.getKernelValue(neighbour);
   }
 
-  EXPECT_NEAR(sum, 1 / (constants::volume), 0.1);
+  EXPECT_NEAR(sum, 1 / (constants::volume), 0.001);
 }
 
 TEST(KernelFunction, reverse) {

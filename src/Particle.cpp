@@ -5,7 +5,6 @@
 #include <iostream>
 #include <utility>
 #include <string>
-#include <sstream>
 
 #define _USE_MATH_DEFINES
 
@@ -13,7 +12,6 @@
 
 #include "Particle.h"
 #include "Constants.h"
-#include "Logger.h"
 
 int Particle::_idCounter = 0;
 
@@ -134,9 +132,7 @@ Vector Particle::getKernelDerivative(const Particle &other) const {
   auto t1 = std::max(1 - distance, 0.0);
   auto t2 = std::max(2 - distance, 0.0);
 
-  return alpha * ((_pos - other._pos) /
-      (distance * constants::particleSize) *
-      (-3 * t2 * t2 + 12 * t1 * t1));
+  return alpha * ((_pos - other._pos) / (distance * constants::particleSize)) * (-3 * t2 * t2 + 12 * t1 * t1);
 }
 
 void Particle::draw(sf::RenderWindow &window) const {
@@ -156,6 +152,19 @@ void Particle::draw(sf::RenderWindow &window) const {
                              + constants::window_size / 2.0),
                      static_cast<float>(constants::window_size / 2.0
                          - _pos.getY() * constants::renderScale));
+
+  sf::CircleShape neigbourCircle(
+      constants::particleRenderSize * constants::renderScale * 1.5);
+  neigbourCircle.setFillColor(sf::Color(0, 0, 0, 0));
+  neigbourCircle.setOutlineColor(sf::Color::Green);
+  neigbourCircle.setOutlineThickness(1);
+  neigbourCircle.setPosition(
+      static_cast<float>((_pos.getX() - (constants::particleSize)) * constants::renderScale + constants::window_size / 2.0),
+      static_cast<float>(constants::window_size / 2.0 - (_pos.getY() + (constants::particleSize)) * constants::renderScale));
+
+  if (_type == ParticleType::FLUID) {
+    window.draw(neigbourCircle);
+  }
   window.draw(circle);
 }
 
@@ -178,7 +187,6 @@ std::ostream &operator<<(std::ostream &os, const Particle &particle) {
 }
 
 Vector Particle::_getPressureAcceleration() const {
-  constexpr double boundaryCorrection = 2.0;
   Vector pressureAcceleration(0, 0);
   Vector solidAcceleration(0, 0);
   Vector fluidAcceleration(0, 0);
@@ -189,7 +197,7 @@ Vector Particle::_getPressureAcceleration() const {
         break;
       }
       case Particle::ParticleType::BOUNDARY: {
-        solidAcceleration += boundaryCorrection * ((_pressure / pow(_density, 2)) + (_pressure / pow(_density, 2))) * getKernelDerivative(*neighbour);
+        solidAcceleration += ((_pressure / pow(_density, 2)) + (_pressure / pow(_density, 2))) * getKernelDerivative(*neighbour);
         break;
       }
       case Particle::ParticleType::NONE:ASSERT(false, "Particle is not fluid or boundary");
@@ -197,27 +205,19 @@ Vector Particle::_getPressureAcceleration() const {
   }
 
   pressureAcceleration = -_mass * (fluidAcceleration + solidAcceleration);
-  std::stringstream ss;
-  ss << "Particle " << _id << " pressure acceleration: " << pressureAcceleration;
-  *CLogger::GetLogger() << ss.str();
   return pressureAcceleration;
 }
 
 Vector Particle::_getViscosityAcceleration() const {
+  constexpr double boundaryCorrection = 100;
   Vector viscosityAcceleration(0, 0);
   for (const auto &neighbour: _neighbours) {
     auto t1 = (neighbour->getMass() / neighbour->getDensity());
-    auto t2_upper =
-        ((_vel - neighbour->getVelocity()) * (_pos - neighbour->getPos()));
-    auto t2_lower = (_pos - neighbour->getPos()) * (_pos - neighbour->getPos())
-        + 0.01 * constants::volume;
+    auto t2_upper = ((_vel - neighbour->getVelocity()) * (_pos - neighbour->getPos()));
+    auto t2_lower = (_pos - neighbour->getPos()) * (_pos - neighbour->getPos()) + 0.01 * constants::volume;
     auto t2 = t2_upper / t2_lower;
-    viscosityAcceleration += t1 * t2 * getKernelDerivative(*neighbour) * ((neighbour->getType() == ParticleType::FLUID) ? 1 : 100);
+    viscosityAcceleration += t1 * t2 * getKernelDerivative(*neighbour) * ((neighbour->getType() == ParticleType::FLUID) ? 1 : boundaryCorrection);
   }
   viscosityAcceleration *= 2 * constants::friction;
-  std::stringstream ss;
-  ss << "Particle " << _id << " viscosity acceleration: " << viscosityAcceleration;
-  *CLogger::GetLogger() << ss.str();
-
   return viscosityAcceleration;
 }

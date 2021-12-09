@@ -193,7 +193,7 @@ Vector Particle::_getPressureAcceleration() const {
 }
 
 Vector Particle::_getViscosityAcceleration() const {
-  constexpr double boundaryCorrection = 40;
+  constexpr double boundaryCorrection = 1;
   Vector viscosityAcceleration(0, 0);
   for (const auto &neighbour: _neighbours) {
     auto t1 = (neighbour->getMass() / neighbour->getDensity());

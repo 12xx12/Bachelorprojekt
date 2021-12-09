@@ -241,13 +241,18 @@ TEST(KernelFunction, reverse) {
   }
 }
 
+TEST(KernelFunction, manualCalculation) {
+  auto testParticle = testSets::basicSet[24];
+  EXPECT_DOUBLE_EQ(testParticle.getKernelValue(testParticle), 4 * (5 / (14 * constants::pi * constants::volume)));
+}
+
 TEST(KernelDerivation, reverse) {
   auto testParticle = testSets::basicSet[24];
   for (const auto &neighbour: testSets::basicSet) {
     auto w_i_j = testParticle.getKernelDerivative(neighbour);
     auto w_j_i = neighbour.getKernelDerivative(testParticle);
-    EXPECT_NEAR(w_i_j.getX(), -w_j_i.getX(), 0.1);
-    EXPECT_NEAR(w_i_j.getY(), -w_j_i.getY(), 0.1);
+    EXPECT_NEAR(w_i_j.getX(), -w_j_i.getX(), 0.001);
+    EXPECT_NEAR(w_i_j.getY(), -w_j_i.getY(), 0.001);
   }
 }
 
@@ -261,7 +266,7 @@ TEST(KerndelDerivation, sum) {
   EXPECT_NEAR(sum.getY(), 0, 0.001);
 }
 
-TEST(KernelDerivation, betweenSamePos) {
+TEST(KernelDerivation, sameParticle) {
   auto testParticle = testSets::basicSet[24];
   EXPECT_NEAR(testParticle.getKernelDerivative(testParticle).getX(), 0, 0.001);
   EXPECT_NEAR(testParticle.getKernelDerivative(testParticle).getY(), 0, 0.001);

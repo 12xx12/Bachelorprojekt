@@ -42,7 +42,7 @@ std::vector <Particle> SimulationLoader::LoadSimulation(std::string path) {
     for (const auto & character : line) {
       // x = boundary, o = fluid, space = empty
       if (character == 'x') {
-        particles.push_back(Particle(x , y , 2.1, Particle::ParticleType::BOUNDARY));
+        particles.push_back(Particle(x , y , 0.9, Particle::ParticleType::BOUNDARY));
       } else if (character == 'o') {
         particles.push_back(Particle(x, y, 1.1, Particle::ParticleType::FLUID));
       } else if (character == ' ') {

@@ -1,8 +1,9 @@
-partikel mit i kennzeichnen
-konsistenter kennzeichnen
-\cdot
-Vektoren fett
-Nochmal gucken wegen gleich position im kernel
-Viskosität auch mit boundary machen
 
 https://interactivecomputergraphics.github.io/SPH-Tutorial/pdf/SPH_Tutorial.pdf
+
+Weniger Viskosität
+Experimente Steifigkeit vs. Zeitschritt
+Durchschnittliche Dichte.
+Graphen Durchschnittliche Dichte
+Boundary dichte = Fluid dichte
+Geschindigkeit -> Farbe

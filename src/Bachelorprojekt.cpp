@@ -65,13 +65,13 @@ int main(int argc, char *argv[]) {
       particle.updateVelocity(constants::time_step);
       particle.updatePosition(constants::time_step);
     }
-
+    /*
     window.clear();
     for (const auto &particle: particles) {
       particle.draw(window);
     }
     window.display();
-
+*/
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration<double, milli>(end - start);
 

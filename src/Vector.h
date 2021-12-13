@@ -2,8 +2,7 @@
 // Created by marc_ on 10.11.2021.
 //
 
-#ifndef VECTOR_H_
-#define VECTOR_H_
+#pragma once
 
 #include <ostream>
 
@@ -47,5 +46,3 @@ extern inline Matrix operator%(const Vector & a, const Vector & b);
 // division
 extern inline Vector operator/(const Vector & other, double scalar);
 extern inline Vector operator/(double scalar, const Vector & other);
-
-#endif //VECTOR_H_

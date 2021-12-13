@@ -2,8 +2,7 @@
 // Created by marc_ on 10.11.2021.
 //
 
-#ifndef BACHELORPROJEKT_SRC_LOGGER_H_
-#define BACHELORPROJEKT_SRC_LOGGER_H_
+#pragma once
 
 #include <fstream>
 #include <iostream>
@@ -66,5 +65,3 @@ class CLogger {
   **/
   static ofstream m_Logfile;
 };
-
-#endif //BACHELORPROJEKT_SRC_LOGGER_H_

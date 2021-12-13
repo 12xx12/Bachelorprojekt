@@ -2,13 +2,12 @@
 // Copyright (C) 2021 Marc Lorenz
 //
 
-#ifndef SRC_PARTICLE_H_
-#define SRC_PARTICLE_H_
+#pragma once
 
 #include <ostream>
 #include <vector>
-#include <SFML/Graphics.hpp>
 
+#include "Globals.h"
 #include "Vector.h"
 
 class Particle {
@@ -29,17 +28,16 @@ class Particle {
   ParticleType getType() const;
   int getId() const;
 
-  void updateNeighbors(const std::vector<Particle> &particles);
+  void updateNeighbors(const ParticleVector &particles);
   void updateDensity();
   void updatePressure();
   void updateVelocity(double time);
   void updatePosition(double time);
 
-  std::vector<const Particle *> getNeighbours(const std::vector<Particle> &allParticles) const;
+  std::vector<const Particle *> getNeighbours(const ParticleVector &allParticles) const;
   double getKernelValue(const Particle &other) const;
   Vector getKernelDerivative(const Particle &other) const;
 
-  void draw(sf::RenderWindow &window) const;
   friend std::ostream &operator<<(std::ostream &os, const Particle &particle);
 
  private:
@@ -59,5 +57,3 @@ class Particle {
 
   static int _idCounter;
 };
-
-#endif  // SRC_PARTICLE_H_

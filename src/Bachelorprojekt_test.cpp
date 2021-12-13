@@ -123,7 +123,7 @@ TEST(VectorTest, tensorProduct) {
 // use density as index
 
 namespace testSets {
-auto basicSet = std::vector<Particle>{
+auto basicSet = ParticleVector{
     Particle(-4.5, -4.5, 1, Particle::ParticleType::FLUID),
     Particle(-4.5, -3, 2, Particle::ParticleType::FLUID),
     Particle(-4.5, -1.5, 3, Particle::ParticleType::FLUID),
@@ -178,7 +178,7 @@ auto basicSet = std::vector<Particle>{
 
 // just test an empty neighbourhood and check if the particle is actually there
 TEST(NeighbourSearch, EmptyNeighbourhood) {
-  auto neighbourhood = std::vector<Particle>{};
+  auto neighbourhood = ParticleVector{};
   auto testParticle = testSets::basicSet[24];
   auto result = testParticle.getNeighbours(neighbourhood);
   EXPECT_EQ(result.size(), 0);

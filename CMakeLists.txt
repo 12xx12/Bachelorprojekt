@@ -32,7 +32,7 @@ add_executable(${CMAKE_PROJECT_NAME}
     src/Logger.h
     src/Matrix.h
     src/Utilities.h
-    src/SimulationLoader.h)
+    src/SimulationLoader.h src/ParticleRenderer.cpp src/ParticleRenderer.h src/Globals.h)
 
 add_executable(${CMAKE_PROJECT_NAME}_test
     src/${CMAKE_PROJECT_NAME}_test.cpp
@@ -71,3 +71,43 @@ target_link_libraries(
     gtest
     gtest_main
 )
+
+# Create a symbolic link from ${orig} to ${link}
+# If the orig and link point to the same thing, does nothing (-> in-source build)
+# If ${link} already exists, does nothing.
+function(make_symlink orig link)
+    # If both are the same, or link already exists, bail out:
+    if ("${orig}" STREQUAL "${link}")
+        return()
+    endif()
+    if (EXISTS ${link})
+        return()
+    endif()
+
+    # Create the symlink (platform-dependent):
+    message(STATUS "Creating symlink, orig = ${orig}; link = ${link}")
+    if (CMAKE_HOST_UNIX)
+        set(command ln -s ${orig} ${link})
+    else()
+        file(TO_NATIVE_PATH "${orig}" orig)
+        file(TO_NATIVE_PATH "${link}" link)
+        if (IS_DIRECTORY ${orig})
+            set(command cmd.exe /c mklink /j ${link} ${orig})
+        else()
+            set(command cmd.exe /c mklink /h ${link} ${orig})
+        endif()
+    endif()
+
+    execute_process(
+            COMMAND ${command}
+            RESULT_VARIABLE result
+            ERROR_VARIABLE stderr
+            OUTPUT_VARIABLE stdout
+    )
+
+    if (NOT ${result} EQUAL 0)
+        message(FATAL_ERROR "Could not create symbolic link for: ${link} --> ${orig}: ${stderr} ${stdout}")
+    endif()
+endfunction(make_symlink)
+
+make_symlink(${CMAKE_SOURCE_DIR}/simulations ${CMAKE_BINARY_DIR}/simulations)

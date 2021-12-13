@@ -2,8 +2,7 @@
 // Created by marc_ on 10.11.2021.
 //
 
-#ifndef BACHELORPROJEKT_SRC_UTILITIES_H_
-#define BACHELORPROJEKT_SRC_UTILITIES_H_
+#pragma once
 
 #include <ctime>
 
@@ -20,5 +19,3 @@ std::string CurrentDateTime() {
   return buf;
 }
 }
-
-#endif //BACHELORPROJEKT_SRC_UTILITIES_H_

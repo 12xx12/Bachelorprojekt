@@ -2,8 +2,7 @@
 // Created by marc_ on 24.11.2021.
 //
 
-#ifndef BACHELORPROJEKT_SRC_MATRIX_H_
-#define BACHELORPROJEKT_SRC_MATRIX_H_
+#pragma once
 
 #include <iostream>
 
@@ -23,5 +22,3 @@ class Matrix {
 extern std::ostream & operator<<(std::ostream& os, const Matrix& matrix);
 extern inline Matrix operator*(double scalar, const Matrix& matrix);
 extern inline bool operator==(const Matrix& lhs, const Matrix& rhs);
-
-#endif //BACHELORPROJEKT_SRC_MATRIX_H_

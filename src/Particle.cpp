@@ -55,7 +55,7 @@ int Particle::getId() const {
   return _id;
 }
 
-void Particle::updateNeighbors(const std::vector<Particle> &particles) {
+void Particle::updateNeighbors(const ParticleVector &particles) {
   if (_type != Particle::ParticleType::FLUID) {
     return;
   }
@@ -100,7 +100,7 @@ void Particle::updatePosition(double time) {
   _pos += _vel * time;
 }
 
-std::vector<const Particle *> Particle::getNeighbours(const std::vector<Particle> &allParticles) const {
+std::vector<const Particle *> Particle::getNeighbours(const ParticleVector &allParticles) const {
   auto neighbours = std::vector<const Particle *>();
 
   for (const auto &particle: allParticles) {
@@ -132,26 +132,6 @@ Vector Particle::getKernelDerivative(const Particle &other) const {
   auto t2 = std::max(2 - distance, 0.0);
 
   return alpha * ((_pos - other._pos) / (distance * constants::particleSize)) * (-3 * t2 * t2 + 12 * t1 * t1);
-}
-
-void Particle::draw(sf::RenderWindow &window) const {
-  sf::CircleShape circle(
-      constants::particleRenderSize * constants::renderScale / 2);
-  switch (_type) {
-    case ParticleType::FLUID:circle.setFillColor(sf::Color::Blue);
-      break;
-    case ParticleType::BOUNDARY:circle.setFillColor(sf::Color::White);
-      break;
-    case ParticleType::NONE:circle.setFillColor(sf::Color::Red);
-      break;
-  }
-
-  circle.setPosition(static_cast<float>(
-                         _pos.getX() * constants::renderScale
-                             + constants::window_size / 2.0),
-                     static_cast<float>(constants::window_size / 2.0
-                         - _pos.getY() * constants::renderScale));
-  window.draw(circle);
 }
 
 std::ostream &operator<<(std::ostream &os, const Particle &particle) {

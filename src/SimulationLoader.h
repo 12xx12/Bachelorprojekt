@@ -2,15 +2,13 @@
 // Created by marc_ on 02.12.2021.
 //
 
-#ifndef BACHELORPROJEKT_SRC_SIMULATIONLOADER_H_
-#define BACHELORPROJEKT_SRC_SIMULATIONLOADER_H_
+#pragma once
 
 #include <vector>
 #include "Particle.h"
 
 class SimulationLoader {
  public:
-  static std::vector<Particle> LoadSimulation(std::string path);
+  static ParticleVector LoadSimulation(std::string path);
 };
 
-#endif //BACHELORPROJEKT_SRC_SIMULATIONLOADER_H_

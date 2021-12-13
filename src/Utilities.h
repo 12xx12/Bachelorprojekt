@@ -10,12 +10,5 @@
 
 namespace Util {
 // Get current date/time, format is YYYY-MM-DD.HH:mm:ss
-std::string CurrentDateTime() {
-  time_t now = time(nullptr);
-  struct tm tstruct{};
-  char buf[80];
-  localtime_s(&tstruct, &now);
-  strftime(buf, sizeof(buf), "%Y-%m-%d.%X", &tstruct);
-  return buf;
-}
+extern std::string CurrentDateTime();
 }

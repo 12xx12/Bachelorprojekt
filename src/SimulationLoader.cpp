@@ -8,7 +8,7 @@
 
 #include "Constants.h"
 
-std::vector <Particle> SimulationLoader::LoadSimulation(std::string path) {
+std::vector <Particle> SimulationLoader::LoadSimulation(const std::string& path) {
   std::vector <Particle> particles;
   std::cout << "Loading simulation from " << path << std::endl;
   std::ifstream file(path);
@@ -42,9 +42,9 @@ std::vector <Particle> SimulationLoader::LoadSimulation(std::string path) {
     for (const auto & character : line) {
       // x = boundary, o = fluid, space = empty
       if (character == 'x') {
-        particles.push_back(Particle(x , y , 0.9, Particle::ParticleType::BOUNDARY));
+        particles.push_back(Particle(x , y , 0.9, Particle::Type::BOUNDARY));
       } else if (character == 'o') {
-        particles.push_back(Particle(x, y, 1.1, Particle::ParticleType::FLUID));
+        particles.push_back(Particle(x, y, 1.1, Particle::Type::FLUID));
       } else if (character == ' ') {
 
       } else {

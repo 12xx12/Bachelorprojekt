@@ -16,7 +16,7 @@ constexpr int window_size = 1000.0;
 constexpr float particleRenderSize = 1.5;
 constexpr float renderScale = 20.0;
 
-constexpr float time_step = 0.001;
+constexpr float time_step = 0.01;
 
 constexpr double pi = 3.14159265358979323846;
 }

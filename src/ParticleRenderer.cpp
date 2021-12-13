@@ -8,29 +8,22 @@
 #include "Constants.h"
 
 ParticleRenderer::ParticleRenderer(ParticleVector &particles) :
-    _particles(particles),
-    _running(false)
-{
-}
-
-void ParticleRenderer::Start() {
-  if (_running) {
-    EXIT("Trying to start a renderer thread while already running");
-  }
+    _particles(particles) {
   _running = true;
-  _thread = std::thread([&]{
-    sf::RenderWindow window(sf::VideoMode(constants::window_size, constants::window_size), "");
+  _thread = std::thread([&] {
+    sf::RenderWindow window
+        (sf::VideoMode(constants::window_size, constants::window_size), "");
     while (_running) {
       window.clear();
-      for (auto &particle : _particles) {
+      for (auto &particle: _particles) {
         sf::CircleShape circle(
             constants::particleRenderSize * constants::renderScale / 2);
         switch (particle.getType()) {
-          case Particle::ParticleType::FLUID:circle.setFillColor(sf::Color::Blue);
+          case Particle::Type::FLUID:circle.setFillColor(sf::Color::Blue);
             break;
-          case Particle::ParticleType::BOUNDARY:circle.setFillColor(sf::Color::White);
+          case Particle::Type::BOUNDARY:circle.setFillColor(sf::Color::White);
             break;
-          case Particle::ParticleType::NONE:circle.setFillColor(sf::Color::Red);
+          case Particle::Type::NONE:circle.setFillColor(sf::Color::Red);
             break;
         }
 
@@ -38,7 +31,8 @@ void ParticleRenderer::Start() {
                                particle.getPos().getX() * constants::renderScale
                                    + constants::window_size / 2.0),
                            static_cast<float>(constants::window_size / 2.0
-                               - particle.getPos().getY() * constants::renderScale));
+                               - particle.getPos().getY()
+                                   * constants::renderScale));
         window.draw(circle);
       }
       window.display();
@@ -52,12 +46,5 @@ void ParticleRenderer::Start() {
     }
     window.close();
   });
-}
-
-void ParticleRenderer::Stop() {
-  if (!_running) {
-    EXIT("Trying to stop a renderer not running!");
-  }
-  _running = false;
-  _thread.join();
+  _thread.detach();
 }

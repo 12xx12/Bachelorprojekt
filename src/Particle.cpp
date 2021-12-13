@@ -16,7 +16,7 @@
 int Particle::_idCounter = 0;
 
 Particle::Particle(double x, double y, double density,
-                   Particle::ParticleType type) {
+                   Particle::Type type) {
   _pos = Vector(x, y);
   _density = density;
   _type = type;
@@ -47,7 +47,7 @@ double Particle::getPressure() const {
   return _pressure;
 }
 
-Particle::ParticleType Particle::getType() const {
+Particle::Type Particle::getType() const {
   return _type;
 }
 
@@ -56,14 +56,14 @@ int Particle::getId() const {
 }
 
 void Particle::updateNeighbors(const ParticleVector &particles) {
-  if (_type != Particle::ParticleType::FLUID) {
+  if (_type != Particle::Type::FLUID) {
     return;
   }
   _neighbours = getNeighbours(particles);
 }
 
 void Particle::updateDensity() {
-  if (_type != Particle::ParticleType::FLUID) {
+  if (_type != Particle::Type::FLUID) {
     return;
   }
   double density = 0;
@@ -74,14 +74,14 @@ void Particle::updateDensity() {
 }
 
 void Particle::updatePressure() {
-  if (_type != Particle::ParticleType::FLUID) {
+  if (_type != Particle::Type::FLUID) {
     return;
   }
   _pressure = std::max(constants::stiffness * ((_density / _baseDensity) - 1), 0.0);
 }
 
 void Particle::updateVelocity(double time) {
-  if (_type != Particle::ParticleType::FLUID) {
+  if (_type != Particle::Type::FLUID) {
     return;
   }
   Vector acceleration = Vector(0, 0);
@@ -94,7 +94,7 @@ void Particle::updateVelocity(double time) {
 }
 
 void Particle::updatePosition(double time) {
-  if (_type != Particle::ParticleType::FLUID) {
+  if (_type != Particle::Type::FLUID) {
     return;
   }
   _pos += _vel * time;
@@ -137,9 +137,9 @@ Vector Particle::getKernelDerivative(const Particle &other) const {
 std::ostream &operator<<(std::ostream &os, const Particle &particle) {
   std::string type;
   switch (particle.getType()) {
-    case Particle::ParticleType::BOUNDARY:type = "BOUNDARY";
+    case Particle::Type::BOUNDARY:type = "BOUNDARY";
       break;
-    case Particle::ParticleType::FLUID:type = "FLUID";
+    case Particle::Type::FLUID:type = "FLUID";
       break;
     default:type = "UNKNOWN";
       break;
@@ -157,15 +157,15 @@ Vector Particle::_getPressureAcceleration() const {
   Vector fluidAcceleration(0, 0);
   for (const auto &neighbour: _neighbours) {
     switch (neighbour->getType()) {
-      case Particle::ParticleType::FLUID: {
+      case Particle::Type::FLUID: {
         fluidAcceleration += ((_pressure / pow(_density, 2)) + (neighbour->getPressure() / pow(neighbour->getDensity(), 2))) * getKernelDerivative(*neighbour);
         break;
       }
-      case Particle::ParticleType::BOUNDARY: {
+      case Particle::Type::BOUNDARY: {
         solidAcceleration += ((_pressure / pow(_density, 2)) + (_pressure / pow(_density, 2))) * getKernelDerivative(*neighbour);
         break;
       }
-      case Particle::ParticleType::NONE:ASSERT(false, "Particle is not fluid or boundary");
+      case Particle::Type::NONE:ASSERT(false, "Particle is not fluid or boundary");
     }
   }
 
@@ -180,7 +180,7 @@ Vector Particle::_getViscosityAcceleration() const {
     auto t2_upper = ((_vel - neighbour->getVelocity()) * (_pos - neighbour->getPos()));
     auto t2_lower = (_pos - neighbour->getPos()) * (_pos - neighbour->getPos()) + 0.01 * constants::volume;
     auto t2 = t2_upper / t2_lower;
-    viscosityAcceleration += t1 * t2 * getKernelDerivative(*neighbour) * ((neighbour->getType() == ParticleType::FLUID) ? 1 : boundaryCorrection);
+    viscosityAcceleration += t1 * t2 * getKernelDerivative(*neighbour) * ((neighbour->getType() == Type::FLUID) ? 1 : boundaryCorrection);
   }
   viscosityAcceleration *= 2 * constants::friction;
   return viscosityAcceleration;

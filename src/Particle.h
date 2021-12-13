@@ -5,27 +5,26 @@
 #pragma once
 
 #include <ostream>
-#include <vector>
 
 #include "Globals.h"
 #include "Vector.h"
 
 class Particle {
  public:
-  enum class ParticleType {
+  enum class Type {
     NONE,
     BOUNDARY,
     FLUID
   };
 
-  Particle(double x, double y, double density, ParticleType type);
+  Particle(double x, double y, double density, Type type);
 
   const Vector &getPos() const;
   const Vector &getVelocity() const;
   double getDensity() const;
   double getMass() const;
   double getPressure() const;
-  ParticleType getType() const;
+  Type getType() const;
   int getId() const;
 
   void updateNeighbors(const ParticleVector &particles);
@@ -51,7 +50,7 @@ class Particle {
   double _pressure{};
   double _mass;
   double _lastUpdate{};
-  ParticleType _type;
+  Type _type;
   std::vector<const Particle *> _neighbours;
   int _id;
 

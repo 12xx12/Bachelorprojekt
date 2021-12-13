@@ -1,10 +1,9 @@
 cmake_minimum_required(VERSION 3.16)
 project(Bachelorprojekt)
 
-# GoogleTest requires at least C++11
 set(CMAKE_CXX_STANDARD 17)
-# set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
+set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
 enable_testing()
@@ -25,6 +24,8 @@ add_executable(${CMAKE_PROJECT_NAME}
     src/Logger.cpp
     src/Matrix.cpp
     src/SimulationLoader.cpp
+    src/ParticleRenderer.cpp
+    src/ParticleAnalyzer.cpp
 
     src/Particle.h
     src/Vector.h
@@ -32,7 +33,10 @@ add_executable(${CMAKE_PROJECT_NAME}
     src/Logger.h
     src/Matrix.h
     src/Utilities.h
-    src/SimulationLoader.h src/ParticleRenderer.cpp src/ParticleRenderer.h src/Globals.h)
+    src/SimulationLoader.h
+    src/ParticleRenderer.h
+    src/Globals.h
+    src/ParticleAnalyzer.h src/Utilities.cpp)
 
 add_executable(${CMAKE_PROJECT_NAME}_test
     src/${CMAKE_PROJECT_NAME}_test.cpp
@@ -61,13 +65,11 @@ target_link_libraries(
 
 target_include_directories(
     ${CMAKE_PROJECT_NAME}_test SYSTEM PRIVATE
-    lib/SFML/include
     lib/googletest/googletest/include
 )
 
 target_link_libraries(
     ${CMAKE_PROJECT_NAME}_test PRIVATE
-    sfml-graphics
     gtest
     gtest_main
 )

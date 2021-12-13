@@ -12,14 +12,18 @@
 #include "Particle.h"
 #include "SimulationLoader.h"
 #include "ParticleRenderer.h"
+#include "ParticleAnalyzer.h"
 
 int main(int argc, char *argv[]) {
+  /*
   if (argc != 2) {
     std::cout << "Usage: " << argv[0] << " [Filename]" << std::endl;
     return 1;
   }
+*/
+  // auto particles = SimulationLoader::LoadSimulation(argv[1]);
+  auto particles = SimulationLoader::LoadSimulation("simulations/basicFilledSquare");
 
-  auto particles = SimulationLoader::LoadSimulation(argv[1]);
   ASSERT(!particles.empty(), "No particles loaded");
   auto log = CLogger::GetLogger();
 
@@ -36,13 +40,16 @@ int main(int argc, char *argv[]) {
 
   // rendering stuff
   ParticleRenderer renderer(particles);
-  renderer.Start();
+
+  // archiving the average density
+  ParticleAnalyzer analyzer;
+
   while (renderer.IsRunning()) {
     auto start = std::chrono::high_resolution_clock::now();
 
     for (auto &p: particles) {
       std::stringstream ss;
-      if (p.getType() == Particle::ParticleType::FLUID) {
+      if (p.getType() == Particle::Type::FLUID) {
         ss << "Updated " << p;
         log->Log(ss.str());
       }
@@ -68,7 +75,7 @@ int main(int argc, char *argv[]) {
     frame_counter++;
     log->Log(std::string("Rendered frame ") + to_string(frame_counter) + " in "
                  + to_string(duration.count() / 1000) + " seconds.");
-
+    analyzer.Log(particles);
   }
   CLogger::exit();
   std::cout << "Exiting" << std::endl;

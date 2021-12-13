@@ -12,7 +12,6 @@ class ParticleRenderer {
  public:
   ParticleRenderer(ParticleVector &particles);
   void Start();
-  void Stop();
   bool IsRunning() { return _running; }
  private:
 

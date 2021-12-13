@@ -4,11 +4,10 @@
 
 #pragma once
 
-#include <vector>
 #include "Particle.h"
 
 class SimulationLoader {
  public:
-  static ParticleVector LoadSimulation(std::string path);
+  static ParticleVector LoadSimulation(const std::string& path);
 };
 

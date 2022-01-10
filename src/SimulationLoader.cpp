@@ -8,8 +8,13 @@
 
 #include "Constants.h"
 
-std::vector <Particle> SimulationLoader::LoadSimulation(const std::string& path) {
-  std::vector <Particle> particles;
+constexpr double particleDensity = 1100;
+
+// Todo: - zoom out when necessary
+//       -
+
+std::vector<Particle> SimulationLoader::LoadSimulation(const std::string &path) {
+  std::vector<Particle> particles;
   std::cout << "Loading simulation from " << path << std::endl;
   std::ifstream file(path);
 
@@ -17,7 +22,7 @@ std::vector <Particle> SimulationLoader::LoadSimulation(const std::string& path)
     EXIT("Could not open file " + path);
   }
 
-  std::vector <std::string> lines;
+  std::vector<std::string> lines;
   size_t lineCount = 0;
   size_t lineLength = 0;
   {
@@ -36,15 +41,15 @@ std::vector <Particle> SimulationLoader::LoadSimulation(const std::string& path)
 
   // center particles in the middle of the simulation
 
-  double x = -static_cast<double>(lineLength / 2) * constants::particleSize;
-  double y = static_cast<double>(lineCount / 2) * constants::particleSize;
-  for (const auto & line : lines) {
-    for (const auto & character : line) {
+  double x = -static_cast<double>(lineLength / 2.0) * constants::particleSize;
+  double y = static_cast<double>(lineCount / 2.0) * constants::particleSize;
+  for (const auto &line: lines) {
+    for (const auto &character: line) {
       // x = boundary, o = fluid, space = empty
       if (character == 'x') {
-        particles.push_back(Particle(x , y , 0.9, Particle::Type::BOUNDARY));
+        particles.emplace_back(x, y, particleDensity, Particle::Type::BOUNDARY);
       } else if (character == 'o') {
-        particles.push_back(Particle(x, y, 1.1, Particle::Type::FLUID));
+        particles.emplace_back(x, y, particleDensity, Particle::Type::FLUID);
       } else if (character == ' ') {
 
       } else {
@@ -52,7 +57,7 @@ std::vector <Particle> SimulationLoader::LoadSimulation(const std::string& path)
       }
       x += constants::particleSize;
     }
-    x = -static_cast<double>(lineLength / 2) * constants::particleSize;
+    x = -static_cast<double>(lineLength / 2.0) * constants::particleSize;
     y -= constants::particleSize;
   }
   std::cout << "Loaded " << particles.size() << " particles" << std::endl;

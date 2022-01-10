@@ -9,14 +9,15 @@ constexpr double particleSize = 1.5;
 constexpr double kernelSupport = 2 * particleSize;
 constexpr double volume = particleSize * particleSize;
 constexpr double gravity = 10.0;
-constexpr double stiffness = 2000.0;
-constexpr double friction = 2.0;
+constexpr double stiffness = 1000000.0;
+constexpr double friction = 0.5;
+constexpr long long analyze_every_n_frames = 10;
 
 constexpr int window_size = 1000.0;
 constexpr float particleRenderSize = 1.5;
 constexpr float renderScale = 20.0;
 
-constexpr float time_step = 0.01;
+constexpr float time_step = 0.007;
 
 constexpr double pi = 3.14159265358979323846;
 }

@@ -12,8 +12,8 @@ def main():
     with open(args.path, 'r') as f:
         for line in f:
             values = line.split('\t')
-            x.append(values[0])
-            y.append(values[1])
+            x.append(float(values[0].replace('\n', '')))
+            y.append(float(values[1].replace('\n', '')))
 
     # plotting the points
     plt.plot(x, y)
@@ -24,7 +24,7 @@ def main():
     plt.ylabel('y - axis')
 
     # giving a title to my graph
-    plt.title('My first graph!')
+    plt.title('Durchschnittliche Dichte über die Zeit')
 
     # function to show the plot
     plt.show()

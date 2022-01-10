@@ -46,12 +46,12 @@ std::ostream &operator<<(std::ostream &os, const Vector &vec) {
   return os;
 }
 
-Vector Vector::operator+(const Vector & other) const {
-  return Vector(_x + other._x, _y + other._y);
+Vector Vector::operator+(const Vector &other) const {
+  return {_x + other._x, _y + other._y};
 }
 
-Vector Vector::operator-(const Vector & other) const {
-  return Vector(_x - other._x, _y - other._y);
+Vector Vector::operator-(const Vector &other) const {
+  return {_x - other._x, _y - other._y};
 }
 
 Vector Vector::operator+=(const Vector &other) {
@@ -73,31 +73,30 @@ Vector Vector::operator*=(double factor) {
 }
 
 Vector Vector::operator-() const {
-  return Vector(-_x, -_y);
+  return {-_x, -_y};
 }
 
-inline Vector operator*(double scalar, const Vector & other) {
-  return Vector(scalar * other.getX(), scalar * other.getY());
+inline Vector operator*(double scalar, const Vector &other) {
+  return {scalar * other.getX(), scalar * other.getY()};
 }
 
-inline Vector operator*(const Vector & other, double scalar) {
-  return Vector(scalar * other.getX(), scalar * other.getY());
+inline Vector operator*(const Vector &other, double scalar) {
+  return {scalar * other.getX(), scalar * other.getY()};
 }
 
-inline double operator*(const Vector & a, const Vector & b) {
+inline double operator*(const Vector &a, const Vector &b) {
   return a.getX() * b.getX() + a.getY() * b.getY();
 }
 
 // Vector multiplication
-inline Matrix operator%(const Vector & a, const Vector & b) {
-  return Matrix(a.getX() * b.getX(), a.getY() * b.getX(),
-                a.getX() * b.getY(), a.getY() * b.getY());
+inline Matrix operator%(const Vector &a, const Vector &b) {
+  return {a.getX() * b.getX(), a.getY() * b.getX(), a.getX() * b.getY(), a.getY() * b.getY()};
 }
 
-inline Vector operator/(const Vector & other, double scalar) {
-  return Vector(other.getX() / scalar, other.getY() / scalar);
+inline Vector operator/(const Vector &other, double scalar) {
+  return {other.getX() / scalar, other.getY() / scalar};
 }
 
-inline Vector operator/(double scalar, const Vector & other) {
-  return Vector(other.getX() / scalar, other.getY() / scalar);
+inline Vector operator/(double scalar, const Vector &other) {
+  return {other.getX() / scalar, other.getY() / scalar};
 }

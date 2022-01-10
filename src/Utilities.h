@@ -11,4 +11,5 @@
 namespace Util {
 // Get current date/time, format is YYYY-MM-DD.HH:mm:ss
 extern std::string CurrentDateTime();
+extern double round(double value, int precision);
 }

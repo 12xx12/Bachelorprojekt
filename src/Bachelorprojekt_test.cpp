@@ -275,15 +275,15 @@ TEST(KernelDerivation, sameParticle) {
 TEST(KernelDerivation, multiplication) {
   auto testParticle = testSets::basicSet[24];
   auto res = Matrix();
-  for (const auto & neighbor : testSets::basicSet) {
-    auto pos = testParticle.getPos() - neighbor.getPos();
-    auto derivative = testParticle.getKernelDerivative(neighbor);
+  for (const auto & neighbor : testParticle.getNeighbours(testSets::basicSet)) {
+    auto pos = testParticle.getPos() - neighbor->getPos();
+    auto derivative = testParticle.getKernelDerivative(*neighbor);
     res += pos % derivative;
   }
-  auto TestMatrix = - 1 / constants::volume * Matrix(1, 0, 0, 1);
+  auto TestMatrix = (- 1 / constants::volume) * Matrix(1, 0, 0, 1);
 
-  EXPECT_NEAR(res.x_1, TestMatrix.x_1, 0.001);
-  EXPECT_NEAR(res.y_1, TestMatrix.y_1, 0.001);
-  EXPECT_NEAR(res.x_2, TestMatrix.x_2, 0.001);
-  EXPECT_NEAR(res.y_2, TestMatrix.y_2, 0.001);
+  EXPECT_NEAR(res.x_1, TestMatrix.x_1, 0.01);
+  EXPECT_NEAR(res.y_1, TestMatrix.y_1, 0.01);
+  EXPECT_NEAR(res.x_2, TestMatrix.x_2, 0.01);
+  EXPECT_NEAR(res.y_2, TestMatrix.y_2, 0.01);
 }

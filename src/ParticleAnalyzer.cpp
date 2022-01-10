@@ -2,7 +2,6 @@
 // Created by marc_ on 13.12.2021.
 //
 
-#include <thread>
 #include <fstream>
 #include <algorithm>
 #include <filesystem>
@@ -22,15 +21,15 @@ ParticleAnalyzer::ParticleAnalyzer()
 void ParticleAnalyzer::Log(const ParticleVector &particles) {
   int numParticles = 0;
   double totalDensity = 0;
-  std::for_each(particles.begin(),
-                particles.end(),
-                [&](const Particle &particle) {
-                  if (particle.getType() == Particle::Type::FLUID) {
-                    numParticles++;
-                    totalDensity += particle.getDensity();
-                  }
-                });
-  _densityFile << _iteration << "\t" << totalDensity / numParticles << std::endl;
+  std::for_each(particles.begin(), particles.end(),
+  [&](const Particle &particle) {
+    if (particle.getType() != Particle::Type::FLUID) {
+      return;
+    }
+    numParticles++;
+    totalDensity += particle.getDensity();
+  });
+  _densityFile << _iteration << "\t" << setprecision(10) << Util::round(totalDensity / numParticles, 8) << std::endl;
   _iteration++;
 }
 

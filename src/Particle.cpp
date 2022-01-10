@@ -6,8 +6,6 @@
 #include <utility>
 #include <string>
 
-#define _USE_MATH_DEFINES
-
 #include <cmath>
 
 #include "Particle.h"
@@ -56,28 +54,24 @@ int Particle::getId() const {
 }
 
 void Particle::updateNeighbors(const ParticleVector &particles) {
-  if (_type != Particle::Type::FLUID) {
-    return;
-  }
   _neighbours = getNeighbours(particles);
+  ASSERT(!_neighbours.empty(), "No neighbours");
 }
 
 void Particle::updateDensity() {
   if (_type != Particle::Type::FLUID) {
     return;
   }
-  double density = 0;
+  double density = 0.0;
   for (auto &neighbour: _neighbours) {
     density += neighbour->getMass() * getKernelValue(*neighbour);
   }
+  ASSERT(density >= 0, "Density is negative");
   _density = density;
 }
 
 void Particle::updatePressure() {
-  if (_type != Particle::Type::FLUID) {
-    return;
-  }
-  _pressure = std::max(constants::stiffness * ((_density / _baseDensity) - 1), 0.0);
+  _pressure = std::max<double>(constants::stiffness * ((_density / _baseDensity) - 1), 0.0);
 }
 
 void Particle::updateVelocity(double time) {
@@ -111,13 +105,13 @@ std::vector<const Particle *> Particle::getNeighbours(const ParticleVector &allP
 }
 
 double Particle::getKernelValue(const Particle &other) const {
-  auto distance = _pos.distance(other._pos) / constants::particleSize;
+  auto distance = other._pos.distance(_pos) / constants::particleSize;
   constexpr double alpha = 5 / (14 * constants::pi * constants::volume);
 
   auto t1 = std::max(1.0 - distance, 0.0);
   auto t2 = std::max(2.0 - distance, 0.0);
 
-  return alpha * (t2 * t2 * t2 - 4 * t1 * t1 * t1);
+  return alpha * (pow(t2, 3) - 4 * pow(t1, 3));
 }
 
 Vector Particle::getKernelDerivative(const Particle &other) const {
@@ -125,13 +119,26 @@ Vector Particle::getKernelDerivative(const Particle &other) const {
     return {};
   }
 
-  auto distance = _pos.distance(other._pos) / constants::particleSize;
+  auto distance = other._pos.distance(_pos) / constants::particleSize;
   constexpr double alpha = 5 / (14 * constants::pi * constants::volume);
 
-  auto t1 = std::max(1 - distance, 0.0);
-  auto t2 = std::max(2 - distance, 0.0);
+  if (distance >= 2)
+  {
+    return {};
+  }
 
-  return alpha * ((_pos - other._pos) / (distance * constants::particleSize)) * (-3 * t2 * t2 + 12 * t1 * t1);
+  double res;
+
+  if (1 <= distance && distance < 2)
+  {
+    res = -3 * pow(2 - distance, 2);
+  }
+  if (0 <= distance && distance < 1)
+  {
+    res = -3 * pow(2 - distance, 2) + 12 * pow(1 - distance, 2);
+  }
+
+  return alpha * ((_pos - other.getPos()) / (distance * constants::particleSize * constants::particleSize)) * res;
 }
 
 std::ostream &operator<<(std::ostream &os, const Particle &particle) {
@@ -153,8 +160,8 @@ std::ostream &operator<<(std::ostream &os, const Particle &particle) {
 }
 
 Vector Particle::_getPressureAcceleration() const {
-  Vector solidAcceleration(0, 0);
-  Vector fluidAcceleration(0, 0);
+  Vector solidAcceleration;
+  Vector fluidAcceleration;
   for (const auto &neighbour: _neighbours) {
     switch (neighbour->getType()) {
       case Particle::Type::FLUID: {
@@ -173,12 +180,12 @@ Vector Particle::_getPressureAcceleration() const {
 }
 
 Vector Particle::_getViscosityAcceleration() const {
-  constexpr double boundaryCorrection = 1;
+  constexpr double boundaryCorrection = 50;
   Vector viscosityAcceleration(0, 0);
   for (const auto &neighbour: _neighbours) {
     auto t1 = (neighbour->getMass() / neighbour->getDensity());
     auto t2_upper = ((_vel - neighbour->getVelocity()) * (_pos - neighbour->getPos()));
-    auto t2_lower = (_pos - neighbour->getPos()) * (_pos - neighbour->getPos()) + 0.01 * constants::volume;
+    auto t2_lower = pow((_pos - neighbour->getPos()).distance({}), 2) + 0.01 * constants::volume;
     auto t2 = t2_upper / t2_lower;
     viscosityAcceleration += t1 * t2 * getKernelDerivative(*neighbour) * ((neighbour->getType() == Type::FLUID) ? 1 : boundaryCorrection);
   }

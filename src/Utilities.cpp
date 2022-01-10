@@ -13,4 +13,9 @@ std::string CurrentDateTime() {
   strftime(buf, sizeof(buf), "%Y-%m-%d.%X", &tstruct);
   return buf;
 }
+
+double round(double value, int precision = 0) {
+  float pow_10 = pow(10.0f, static_cast<float>(precision));
+  return std::round(value * pow_10) / pow_10;
+}
 }

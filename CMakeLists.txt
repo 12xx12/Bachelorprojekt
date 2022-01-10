@@ -14,8 +14,8 @@ build_dependencies()
 # For Windows: Prevent overriding the parent project's compiler/linker settings
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
-set(CMAKE_CXX_FLAGS_RELEASE  "-O2 -DNDEBUG")
-set(CMAKE_CXX_FLAGS_DEBUG   "-O2 -DNDEBUG")
+set(CMAKE_CXX_FLAGS_RELEASE  "-O2")
+set(CMAKE_CXX_FLAGS_DEBUG   "-O2")
 
 add_executable(${CMAKE_PROJECT_NAME}
     src/${CMAKE_PROJECT_NAME}.cpp
@@ -36,7 +36,9 @@ add_executable(${CMAKE_PROJECT_NAME}
     src/SimulationLoader.h
     src/ParticleRenderer.h
     src/Globals.h
-    src/ParticleAnalyzer.h src/Utilities.cpp)
+    src/ParticleAnalyzer.h
+    src/Utilities.cpp
+)
 
 add_executable(${CMAKE_PROJECT_NAME}_test
     src/${CMAKE_PROJECT_NAME}_test.cpp
@@ -44,6 +46,7 @@ add_executable(${CMAKE_PROJECT_NAME}_test
     src/Vector.cpp
     src/Logger.cpp
     src/Matrix.cpp
+    src/Utilities.cpp
 
     src/Particle.h
     src/Vector.h

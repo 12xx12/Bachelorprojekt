@@ -2,7 +2,6 @@
 // Copyright (C) 2021 Marc Lorenz
 //
 
-#include <SFML/Graphics.hpp>
 #include <chrono>
 #include <sstream>
 #include <thread>
@@ -15,18 +14,13 @@
 #include "ParticleAnalyzer.h"
 
 int main(int argc, char *argv[]) {
-  /*
+
   if (argc != 2) {
     std::cout << "Usage: " << argv[0] << " [Filename]" << std::endl;
     return 1;
   }
-*/
-  // auto particles = SimulationLoader::LoadSimulation(argv[1]);
-  auto particles = SimulationLoader::LoadSimulation("simulations/basicFilledSquare");
 
-  ASSERT(!particles.empty(), "No particles loaded");
   auto log = CLogger::GetLogger();
-
   // logging stuff
   log->Log("");
   log->Log("");
@@ -35,6 +29,11 @@ int main(int argc, char *argv[]) {
   log->Log("");
   log->Log("");
   log->Log("");
+
+  auto particles = SimulationLoader::LoadSimulation(argv[1]);
+
+  ASSERT(!particles.empty(), "No particles loaded");
+
   log->Log("Startup finished, rendering %d particles", particles.size());
   long long frame_counter = 0;
 
@@ -75,7 +74,10 @@ int main(int argc, char *argv[]) {
     frame_counter++;
     log->Log(std::string("Rendered frame ") + to_string(frame_counter) + " in "
                  + to_string(duration.count() / 1000) + " seconds.");
-    analyzer.Log(particles);
+
+    if (frame_counter % constants::analyze_every_n_frames == 0) {
+      analyzer.Log(particles);
+    }
   }
   CLogger::exit();
   std::cout << "Exiting" << std::endl;

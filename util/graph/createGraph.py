@@ -19,12 +19,12 @@ def main():
     plt.plot(x, y)
 
     # naming the x axis
-    plt.xlabel('x - axis')
+    plt.xlabel('time')
     # naming the y axis
-    plt.ylabel('y - axis')
+    plt.ylabel('density')
 
     # giving a title to my graph
-    plt.title('Durchschnittliche Dichte über die Zeit')
+    plt.title('Average density across time')
 
     # function to show the plot
     plt.show()

@@ -217,7 +217,7 @@ TEST(KenelFunction, compactTest) {
   auto testParticle = testSets::basicSet[24];
   for (const auto &neighbour: testSets::basicSet) {
     if (neighbour.getPos().distance(testParticle.getPos()) >= constants::kernelSupport) {
-      EXPECT_NEAR(testParticle.getKernelValue(neighbour), 0, 0.02);
+      EXPECT_NEAR(testParticle.getKernelValue(neighbour), 0, 0.0002);
     } else {
       EXPECT_GT(testParticle.getKernelValue(neighbour), 0);
     }
@@ -225,13 +225,14 @@ TEST(KenelFunction, compactTest) {
 }
 
 TEST(KernelFunction, sum) {
-  auto testParticle = testSets::basicSet[24];
-  double sum = 0;
-  for (const auto &neighbour: testSets::basicSet) {
-    sum += testParticle.getKernelValue(neighbour);
-  }
+  for (const auto &particle: testSets::basicSet) {
+    double sum = 0;
+    for (const auto &neighbour: testSets::basicSet) {
+      sum += particle.getKernelValue(neighbour);
+    }
 
-  EXPECT_NEAR(sum, 1 / (constants::volume), 0.001);
+    EXPECT_NEAR(sum, 1 / (constants::volume), 0.2);
+  }
 }
 
 TEST(KernelFunction, reverse) {
@@ -247,40 +248,43 @@ TEST(KernelFunction, manualCalculation) {
 }
 
 TEST(KernelDerivation, reverse) {
-  auto testParticle = testSets::basicSet[24];
-  for (const auto &neighbour: testSets::basicSet) {
-    auto w_i_j = testParticle.getKernelDerivative(neighbour);
-    auto w_j_i = neighbour.getKernelDerivative(testParticle);
-    EXPECT_NEAR(w_i_j.getX(), -w_j_i.getX(), 0.001);
-    EXPECT_NEAR(w_i_j.getY(), -w_j_i.getY(), 0.001);
+  for (const auto &testParticle: testSets::basicSet) {
+    for (const auto &neighbour: testSets::basicSet) {
+      auto w_i_j = testParticle.getKernelDerivative(neighbour);
+      auto w_j_i = neighbour.getKernelDerivative(testParticle);
+      EXPECT_NEAR(w_i_j.getX(), -w_j_i.getX(), 0.001);
+      EXPECT_NEAR(w_i_j.getY(), -w_j_i.getY(), 0.001);
+    }
   }
 }
 
 TEST(KerndelDerivation, sum) {
-  auto testParticle = testSets::basicSet[24];
-  auto sum = Vector();
-  for (const auto &neighbour: testSets::basicSet) {
-    sum += testParticle.getKernelDerivative(neighbour);
+  for (const auto &testParticle: testSets::basicSet) {
+    Vector sum;
+    for (const auto &neighbour: testSets::basicSet) {
+      sum += testParticle.getKernelDerivative(neighbour);
+    }
+    EXPECT_NEAR(sum.getX(), 0, 0.2);
+    EXPECT_NEAR(sum.getY(), 0, 0.2);
   }
-  EXPECT_NEAR(sum.getX(), 0, 0.001);
-  EXPECT_NEAR(sum.getY(), 0, 0.001);
 }
 
 TEST(KernelDerivation, sameParticle) {
-  auto testParticle = testSets::basicSet[24];
-  EXPECT_NEAR(testParticle.getKernelDerivative(testParticle).getX(), 0, 0.001);
-  EXPECT_NEAR(testParticle.getKernelDerivative(testParticle).getY(), 0, 0.001);
+  for (const auto &testParticle: testSets::basicSet) {
+    EXPECT_NEAR(testParticle.getKernelDerivative(testParticle).getX(), 0, 0.001);
+    EXPECT_NEAR(testParticle.getKernelDerivative(testParticle).getY(), 0, 0.001);
+  }
 }
 
 TEST(KernelDerivation, multiplication) {
   auto testParticle = testSets::basicSet[24];
   auto res = Matrix();
-  for (const auto & neighbor : testParticle.getNeighbours(testSets::basicSet)) {
+  for (const auto &neighbor: testParticle.getNeighbours(testSets::basicSet)) {
     auto pos = testParticle.getPos() - neighbor->getPos();
     auto derivative = testParticle.getKernelDerivative(*neighbor);
     res += pos % derivative;
   }
-  auto TestMatrix = (- 1 / constants::volume) * Matrix(1, 0, 0, 1);
+  auto TestMatrix = (-1 / constants::volume) * Matrix(1, 0, 0, 1);
 
   EXPECT_NEAR(res.x_1, TestMatrix.x_1, 0.01);
   EXPECT_NEAR(res.y_1, TestMatrix.y_1, 0.01);

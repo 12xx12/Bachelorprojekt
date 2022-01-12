@@ -75,9 +75,7 @@ int main(int argc, char *argv[]) {
     log->Log(std::string("Rendered frame ") + to_string(frame_counter) + " in "
                  + to_string(duration.count() / 1000) + " seconds.");
 
-    if (frame_counter % constants::analyze_every_n_frames == 0) {
-      analyzer.Log(particles);
-    }
+    analyzer.Log(particles);
   }
   CLogger::exit();
   std::cout << "Exiting" << std::endl;

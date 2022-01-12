@@ -11,7 +11,6 @@ constexpr double volume = particleSize * particleSize;
 constexpr double gravity = 10.0;
 constexpr double stiffness = 1000000.0;
 constexpr double friction = 0.5;
-constexpr long long analyze_every_n_frames = 10;
 
 constexpr int window_size = 1000.0;
 constexpr float particleRenderSize = 1.5;

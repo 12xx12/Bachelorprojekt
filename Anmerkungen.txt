@@ -1,9 +1,17 @@
 
-https://interactivecomputergraphics.github.io/SPH-Tutorial/pdf/SPH_Tutorial.pdf
-
-Weniger Viskosität
-Experimente Steifigkeit vs. Zeitschritt
-Durchschnittliche Dichte.
-Graphen Durchschnittliche Dichte
-Boundary dichte = Fluid dichte
 Geschindigkeit -> Farbe
+
+
+eperimente: 
+Wieso ?
+Versuchsaufbau?
+Ergebnis? -> Graph
+Kurz ergebnis erklären
+
+Durchschnittliche dichte -was zum fehler sagen
+Dichtefeld herstellung genauer beschreiben, schärfer
+Dichtefeld mehr nach oben samplen
+schmaler - aber höher
+
+Graph dichte oszilieren -> mehrere steifigkeiten
+Datei mit auflistung von externen Tools

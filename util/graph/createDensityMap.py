@@ -1,6 +1,8 @@
 
 import argparse
-from PIL import Image
+import matplotlib.pyplot as plt
+import numpy as np
+from numpy import sqrt
 
 
 def main():
@@ -8,24 +10,30 @@ def main():
         description='Create a graph from a tsv file')
     parser.add_argument('path', help='Path to the tsv file', type=str)
     args = parser.parse_args()
+
     val = []
     with open(args.path, 'r') as f:
+        inner_val = []
         for line in f:
             if line == "\n":
-                break
-            values = line.split('\t')
-            val.append((float(values[0].replace('\n', '')),
-                        float(values[1].replace('\n', '')),
-                        float(values[2].replace('\n', ''))))
+                val.append(inner_val)
+                inner_val = []
+                continue
+            inner_val.append(float(line.replace('\n', '')))
 
-    minimum = min(val, key=lambda x: x[2])
-    maximum = max(val, key=lambda x: x[2])
+    val.reverse()
 
-    img = Image.new('RGB', (len(val), len(val)), 'white')
+    plt.imshow(val, cmap='viridis', interpolation='nearest')
 
+    plt.xticks([])
+    plt.yticks([])
+    plt.colorbar()
 
+    # giving a title to my graph
+    plt.title('Density in the fluid')
 
-    img.save('densityMap.png')
+    # function to show the plot
+    plt.show()
 
 
 if __name__ == '__main__':

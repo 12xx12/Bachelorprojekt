@@ -68,8 +68,9 @@ void ParticleAnalyzer::StoreMap(const ParticleVector &particles) {
       particle.updateNeighbors(particles);
       particle.updateDensity();
       auto density = particle.getDensity();
-      mapFile << x << "\t" << y << "\t" << density << "\n";
+      mapFile << density << std::endl;
     }
+    mapFile << std::endl;
   }
   mapFile.close();
 }

@@ -41,6 +41,9 @@ void ParticleAnalyzer::Log(const ParticleVector &particles) {
 }
 
 void ParticleAnalyzer::StoreMap(const ParticleVector &particles) {
+
+  std::cout << "Storing map" << std::endl;
+
   std::ofstream mapFile;
   auto mapFileName = "maps/map_" + Util::CurrentDateTime() + ".txt";
   std::filesystem::create_directories("maps");
@@ -62,8 +65,12 @@ void ParticleAnalyzer::StoreMap(const ParticleVector &particles) {
     return a.getPos().getX() + a.getPos().getY() < b.getPos().getX() + b.getPos().getY();
   });
 
-  for (auto y = min->getPos().getY(); y < max->getPos().getY(); y += 0.1) {
-    for (auto x = min->getPos().getX(); x < max->getPos().getX(); x += 0.1) {
+  // increase sample window
+  auto maxPos = max->getPos() + Vector(0, 4);
+  std::cout << "maxPos: " << maxPos << std::endl;
+  std::cout << "minPos: " << min->getPos() << std::endl;
+  for (auto y = min->getPos().getY(); y < maxPos.getY(); y += 0.05) {
+    for (auto x = min->getPos().getX(); x < maxPos.getX(); x += 0.05) {
       auto particle = Particle(x, y, 0, Particle::Type::FLUID);
       particle.updateNeighbors(particles);
       particle.updateDensity();
@@ -72,6 +79,8 @@ void ParticleAnalyzer::StoreMap(const ParticleVector &particles) {
     }
     mapFile << std::endl;
   }
+
+  std::cout << "Map file created" << std::endl;
   mapFile.close();
 }
 

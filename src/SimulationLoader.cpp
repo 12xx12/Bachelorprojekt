@@ -7,6 +7,7 @@
 #include <sstream>
 
 #include "Constants.h"
+#include "ParticleRenderer.h"
 
 constexpr double particleDensity = 1100;
 
@@ -60,6 +61,8 @@ std::vector<Particle> SimulationLoader::LoadSimulation(const std::string &path) 
     x = -static_cast<double>(lineLength / 2.0) * constants::particleSize;
     y -= constants::particleSize;
   }
+
+  ParticleRenderer::renderScale = static_cast<float>(constants::window_size / (std::max(static_cast<float>(lineLength), static_cast<float>(lineCount)) * constants::particleSize));
   std::cout << "Loaded " << particles.size() << " particles" << std::endl;
   return std::move(particles);
 }

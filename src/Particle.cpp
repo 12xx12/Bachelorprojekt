@@ -7,6 +7,7 @@
 #include <string>
 
 #include <cmath>
+#include <algorithm>
 
 #include "Particle.h"
 #include "Constants.h"
@@ -23,6 +24,9 @@ Particle::Particle(double x, double y, double density,
   _vel = Vector(0, 0);
   _id = ++_idCounter;
   _pressure = 0;
+}
+void Particle::SetPos(const Vector &pos) {
+  _pos = pos;
 }
 
 const Vector &Particle::getPos() const {
@@ -55,7 +59,7 @@ int Particle::getId() const {
 
 void Particle::updateNeighbors(const ParticleVector &particles) {
   _neighbours = getNeighbours(particles);
-  ASSERT(!_neighbours.empty(), "No neighbours");
+  // ASSERT(!_neighbours.empty(), "No neighbours");
 }
 
 void Particle::updateDensity() {
@@ -97,10 +101,10 @@ void Particle::updatePosition(double time) {
 std::vector<const Particle *> Particle::getNeighbours(const ParticleVector &allParticles) const {
   auto neighbours = std::vector<const Particle *>();
 
-  for (const auto &particle: allParticles) {
+  std::for_each(allParticles.begin(), allParticles.end(), [&](const Particle &particle) {
     if (particle._pos.distance(_pos) < constants::kernelSupport)
       neighbours.push_back(&particle);
-  }
+  });
   return std::move(neighbours);
 }
 

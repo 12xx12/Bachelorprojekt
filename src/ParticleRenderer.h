@@ -12,7 +12,9 @@ class ParticleRenderer {
  public:
   ParticleRenderer(ParticleVector &particles);
   void Start();
+  void Stop();
   bool IsRunning() { return _running; }
+  static float renderScale;
  private:
 
   ParticleVector &_particles;

@@ -33,6 +33,7 @@ int main(int argc, char *argv[]) {
   auto particles = SimulationLoader::LoadSimulation(argv[1]);
 
   ASSERT(!particles.empty(), "No particles loaded");
+  std::cout << ParticleRenderer::renderScale << std::endl;
 
   log->Log("Startup finished, rendering %d particles", particles.size());
   long long frame_counter = 0;
@@ -64,8 +65,9 @@ int main(int argc, char *argv[]) {
     });
 
     for (auto &particle: particles) {
+      /*
       particle.updateVelocity(constants::time_step);
-      particle.updatePosition(constants::time_step);
+      particle.updatePosition(constants::time_step); */
     }
 
     auto end = std::chrono::high_resolution_clock::now();
@@ -76,6 +78,10 @@ int main(int argc, char *argv[]) {
                  + to_string(duration.count() / 1000) + " seconds.");
 
     analyzer.Log(particles);
+
+    if (frame_counter == 6000) {
+      renderer.Stop();
+    }
   }
   CLogger::exit();
   std::cout << "Exiting" << std::endl;

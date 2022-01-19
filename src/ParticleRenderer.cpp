@@ -7,6 +7,8 @@
 #include "ParticleRenderer.h"
 #include "Constants.h"
 
+float ParticleRenderer::renderScale = 0;
+
 ParticleRenderer::ParticleRenderer(ParticleVector &particles) :
     _particles(particles) {
   _running = true;
@@ -17,7 +19,7 @@ ParticleRenderer::ParticleRenderer(ParticleVector &particles) :
       window.clear();
       for (auto &particle: _particles) {
         sf::CircleShape circle(
-            constants::particleRenderSize * constants::renderScale / 2);
+            constants::particleRenderSize * ParticleRenderer::renderScale / 2);
         switch (particle.getType()) {
           case Particle::Type::FLUID:circle.setFillColor(sf::Color::Blue);
             break;
@@ -28,11 +30,11 @@ ParticleRenderer::ParticleRenderer(ParticleVector &particles) :
         }
 
         circle.setPosition(static_cast<float>(
-                               particle.getPos().getX() * constants::renderScale
+                               particle.getPos().getX() * ParticleRenderer::renderScale
                                    + constants::window_size / 2.0),
                            static_cast<float>(constants::window_size / 2.0
                                - particle.getPos().getY()
-                                   * constants::renderScale));
+                                   * ParticleRenderer::renderScale));
         window.draw(circle);
       }
       window.display();
@@ -47,4 +49,8 @@ ParticleRenderer::ParticleRenderer(ParticleVector &particles) :
     window.close();
   });
   _thread.detach();
+}
+
+void ParticleRenderer::Stop() {
+  _running = false;
 }

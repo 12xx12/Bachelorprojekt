@@ -18,6 +18,8 @@ def main():
     # plotting the points
     plt.plot(x, y)
 
+    plt.plot([0, 6000], [1100, 1100], color='black', linestyle='dashed')
+
     # naming the x axis
     plt.xlabel('time')
     # naming the y axis

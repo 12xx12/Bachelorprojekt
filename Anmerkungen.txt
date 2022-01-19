@@ -1,17 +1,3 @@
 
 Geschindigkeit -> Farbe
 
-
-eperimente: 
-Wieso ?
-Versuchsaufbau?
-Ergebnis? -> Graph
-Kurz ergebnis erklären
-
-Durchschnittliche dichte -was zum fehler sagen
-Dichtefeld herstellung genauer beschreiben, schärfer
-Dichtefeld mehr nach oben samplen
-schmaler - aber höher
-
-Graph dichte oszilieren -> mehrere steifigkeiten
-Datei mit auflistung von externen Tools

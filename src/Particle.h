@@ -38,6 +38,7 @@ class Particle {
   Vector getKernelDerivative(const Particle &other) const;
 
   friend std::ostream &operator<<(std::ostream &os, const Particle &particle);
+  void SetPos(const Vector &pos);
 
  private:
   Vector _getPressureAcceleration() const;

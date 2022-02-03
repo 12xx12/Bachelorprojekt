@@ -44,6 +44,8 @@ int main(int argc, char *argv[]) {
   // archiving the average density
   ParticleAnalyzer analyzer;
 
+  auto total_start = std::chrono::high_resolution_clock::now();
+
   while (renderer.IsRunning()) {
     auto start = std::chrono::high_resolution_clock::now();
 
@@ -65,9 +67,8 @@ int main(int argc, char *argv[]) {
     });
 
     for (auto &particle: particles) {
-      /*
       particle.updateVelocity(constants::time_step);
-      particle.updatePosition(constants::time_step); */
+      particle.updatePosition(constants::time_step);
     }
 
     auto end = std::chrono::high_resolution_clock::now();
@@ -79,11 +80,16 @@ int main(int argc, char *argv[]) {
 
     analyzer.Log(particles);
 
-    if (frame_counter == 6000) {
+    if (frame_counter == 12000) {
       renderer.Stop();
     }
   }
   CLogger::exit();
+
+  auto total_end = std::chrono::high_resolution_clock::now();
+  auto total_duration = std::chrono::duration<double, milli>(total_end - total_start);
+  std::cout << "Total duration: " << total_duration.count() / 1000 << " seconds." << std::endl;
+
   std::cout << "Exiting" << std::endl;
 
   return 0;

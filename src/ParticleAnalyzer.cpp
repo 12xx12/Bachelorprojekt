@@ -33,8 +33,8 @@ void ParticleAnalyzer::Log(const ParticleVector &particles) {
 
   // Creates a map of all particles in the simulation after 2000 iterations
 
-  if (_iteration == 2000) {
-    StoreMap(particles);
+  if (_iteration == 4000) {
+    // StoreMap(particles);
   }
 
   _iteration++;
@@ -66,7 +66,7 @@ void ParticleAnalyzer::StoreMap(const ParticleVector &particles) {
   });
 
   // increase sample window
-  auto maxPos = max->getPos() + Vector(0, 4);
+  auto maxPos = max->getPos() + Vector(0, -1);
   std::cout << "maxPos: " << maxPos << std::endl;
   std::cout << "minPos: " << min->getPos() << std::endl;
   for (auto y = min->getPos().getY(); y < maxPos.getY(); y += 0.05) {

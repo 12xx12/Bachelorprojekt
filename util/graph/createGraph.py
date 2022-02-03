@@ -18,7 +18,10 @@ def main():
     # plotting the points
     plt.plot(x, y)
 
-    plt.plot([0, 6000], [1100, 1100], color='black', linestyle='dashed')
+    plt.plot([0, 6000], [1100, 1100], color='black',
+             linestyle='dashed', label='initial density')
+    plt.legend()
+    plt.ylim([1060, 1350])
 
     # naming the x axis
     plt.xlabel('time')

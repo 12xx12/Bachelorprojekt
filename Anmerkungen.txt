@@ -1,3 +1,54 @@
 
-Geschindigkeit -> Farbe
+mehr quellen
+ - j j monoghan
+ - doi.org/10.1007/s11831-010-9040-7
+ - morris
+ - Smoothed Particle Hydrodynamics and Magnetohydrodynamics, Daniel J. Price
+ - Quellen auf website vom lehrstuhl verweisen.
+ - Tutorial von Website
 
+Andere links
+
+Simulation: mit wenig partikeln und vielen (performance messeung)
+
+Vor jedem großen absatz immer einführenden satz schreiben, was asl nächstes passiert.
+Interpolation der partikel
+
+- Randbehandlung was dazu sagen
+- Letzter test für kernel ableitung machen
+
+formeln nummerieren
+
+Gliederung:
+ - Intro (siehe zwischentexte)
+   - Relevanz
+   - was schwierig -> rechenaufwendig, genaugkeit
+   - hier einfacher solver
+   - überblick über arbeit
+ - Konzepte
+ - Implentierung (auch test)
+ - Analyse (observations lokale, kleine tests, globale ergebnisse)
+ - Conclusion
+
+mehr steif = kleinere amplitude
+mehr messwerte - k -> delta t
+für durchscnittle dichte -> viskosität runter
+
+graph: steifigkeit vs. mittlerer dichtefehler
+
+INKOMPRESSIBLES FLUID
+
+gleichung 5 - J klein
+
+2.1.1 position
+2.1.2 velocity
+
+Andreas Peer - wegen navier stokes und viskosität
+kernel limits = kernel properties
+parket indizes nicht fett.
+
+n bisschen mehr im einlass
+
+Zu setup: figure refernzieren. in bild initialen zustand mit partikel erklären
+referenzen auf graphen in experimenten referenzieren
+typos

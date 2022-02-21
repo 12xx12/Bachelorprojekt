@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
       }
     }
 
-    std::for_each(std::execution::par , particles.begin(), particles.end(), [&](Particle &p) {
+    std::for_each(particles.begin(), particles.end(), [&](Particle &p) {
       p.updateNeighbors(particles);
     });
 
@@ -67,10 +67,10 @@ int main(int argc, char *argv[]) {
       p.updatePressure();
     });
 
-    for (auto &particle: particles) {
-      particle.updateVelocity(constants::time_step);
-      particle.updatePosition(constants::time_step);
-    }
+    std::for_each(particles.begin(), particles.end(), [&](Particle &p) {
+      p.updateVelocity(constants::time_step);
+      p.updatePosition(constants::time_step);
+    });
 
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration<double, milli>(end - start);

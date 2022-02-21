@@ -1,14 +1,3 @@
-
-mehr quellen
- - j j monoghan
- - doi.org/10.1007/s11831-010-9040-7
- - morris
- - Smoothed Particle Hydrodynamics and Magnetohydrodynamics, Daniel J. Price
- - Quellen auf website vom lehrstuhl verweisen.
- - Tutorial von Website
-
-Andere links
-
 Simulation: mit wenig partikeln und vielen (performance messeung)
 
 Vor jedem großen absatz immer einführenden satz schreiben, was asl nächstes passiert.
@@ -38,11 +27,6 @@ graph: steifigkeit vs. mittlerer dichtefehler
 
 INKOMPRESSIBLES FLUID
 
-gleichung 5 - J klein
-
-2.1.1 position
-2.1.2 velocity
-
 Andreas Peer - wegen navier stokes und viskosität
 kernel limits = kernel properties
 parket indizes nicht fett.
@@ -52,3 +36,10 @@ n bisschen mehr im einlass
 Zu setup: figure refernzieren. in bild initialen zustand mit partikel erklären
 referenzen auf graphen in experimenten referenzieren
 typos
+
+Vorsichtiger formulieren
+Videos (auch mit link)
+kleine durschnittliche dichte -> viele partikel ohne nachbarn -> geringere dichte an diesen partikeln
+Kommentar zur auswahl der Ruhedichte
+logger quelle
+besondere bemerkungen

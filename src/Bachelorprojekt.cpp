@@ -5,6 +5,7 @@
 #include <chrono>
 #include <sstream>
 #include <thread>
+#include <execution>
 
 #include "Constants.h"
 #include "Logger.h"
@@ -57,7 +58,7 @@ int main(int argc, char *argv[]) {
       }
     }
 
-    std::for_each(particles.begin(), particles.end(), [&](Particle &p) {
+    std::for_each(std::execution::par , particles.begin(), particles.end(), [&](Particle &p) {
       p.updateNeighbors(particles);
     });
 
